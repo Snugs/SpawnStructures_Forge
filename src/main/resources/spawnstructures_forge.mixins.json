@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "net.snuggsy.spawnstructures.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "spawnstructures_forge.refmap.json",
+  "mixins": [
+    "JigsawPlacementMixin",
+    "SpawnLocationMixin_Forge"
+  ],
+  "client": [
+  ],
+  "minVersion": "0.8"
+}

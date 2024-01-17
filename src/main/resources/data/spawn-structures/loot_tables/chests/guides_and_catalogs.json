@@ -1,0 +1,98 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aether:book_of_lore"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "adventurez:handbook"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "botania:lexicon"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "exoticbirds:bird_book"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "betterend:guidebook"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "alexsmobs:animal_dictionary"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "iceandfire:bestiary"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "patchouli:guide_book",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"patchouli:book\": \"simplyswords:runic_grimoire\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "patchouli:guide_book",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"patchouli:book\": \"twilightdelight:twilight_guide\"}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
