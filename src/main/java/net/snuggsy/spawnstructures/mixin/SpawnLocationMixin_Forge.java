@@ -5,7 +5,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.snuggsy.spawnstructures.SpawnStructures;
 import net.snuggsy.spawnstructures.events.StructureSpawnEvent;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
