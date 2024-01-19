@@ -5,13 +5,12 @@ import net.minecraft.server.level.ServerPlayer;
 import net.snuggsy.spawnstructures.SpawnStructures;
 import net.snuggsy.spawnstructures.events.StructureSpawnEvent;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(ServerPlayer.class)
 public abstract class SpawnLocationMixin_Forge {
-
-    private BlockPos defaultSpawn;
 
     @ModifyArg(method = "fudgeSpawnLocation(Lnet/minecraft/server/level/ServerLevel;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;moveTo(Lnet/minecraft/core/BlockPos;FF)V"), index = 0)
     private BlockPos injected (BlockPos par1) {
@@ -21,8 +20,7 @@ public abstract class SpawnLocationMixin_Forge {
             StructureSpawnEvent.worldInit = false;
             return SpawnStructures.spawnPos;
         }
-        defaultSpawn = new BlockPos(par1.getX(), par1.getY() - 14, par1.getZ());
-        return defaultSpawn;
+        return new BlockPos(par1.getX(), par1.getY() - 14, par1.getZ());
     }
 
     @ModifyArg(method = "fudgeSpawnLocation(Lnet/minecraft/server/level/ServerLevel;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;moveTo(Lnet/minecraft/core/BlockPos;FF)V"), index = 1)
