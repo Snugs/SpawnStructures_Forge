@@ -6,6 +6,7 @@ import net.minecraft.world.level.levelgen.WorldOptions;
 import net.minecraft.world.level.storage.ServerLevelData;
 import net.snuggsy.spawnstructures.SpawnStructures;
 import net.snuggsy.spawnstructures.functions.BlockPosFunctions;
+import net.snuggsy.spawnstructures.functions.CommandFunctions;
 
 public class StructureSpawnEvent {
     public static Rotation structureRotation;
@@ -27,7 +28,7 @@ public class StructureSpawnEvent {
 
         serverLevel.setDefaultSpawnPos(SpawnStructures.spawnPos, SpawnStructures.spawnRot);
         worldInit = true;
-        //String spawnDistance = CommandFunctions.getRawCommandOutput(serverLevel, null, "/gamerule spawnRadius 0");
+        String spawnDistance = CommandFunctions.getRawCommandOutput(serverLevel, null, "/gamerule spawnRadius 0");
 
         return true;
     }
