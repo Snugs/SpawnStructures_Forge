@@ -9,22 +9,29 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(ServerPlayer.class)
-public class SpawnLocationMixin_Forge {
+public abstract class SpawnLocationMixin_Forge {
+
+    private BlockPos defaultSpawn;
 
     @ModifyArg(method = "fudgeSpawnLocation(Lnet/minecraft/server/level/ServerLevel;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;moveTo(Lnet/minecraft/core/BlockPos;FF)V"), index = 0)
     private BlockPos injected (BlockPos par1) {
         if (!StructureSpawnEvent.genStructures) {
             return par1;
+        } else if (StructureSpawnEvent.worldInit) {
+            StructureSpawnEvent.worldInit = false;
+            return SpawnStructures.spawnPos;
         }
-        return SpawnStructures.spawnPos;
+        defaultSpawn = new BlockPos(par1.getX(), par1.getY() - 14, par1.getZ());
+        return defaultSpawn;
     }
 
     @ModifyArg(method = "fudgeSpawnLocation(Lnet/minecraft/server/level/ServerLevel;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;moveTo(Lnet/minecraft/core/BlockPos;FF)V"), index = 1)
     private float injected(float par2) {
         if (!StructureSpawnEvent.genStructures) {
             return par2;
+        } else if (StructureSpawnEvent.worldInit) {
+            return SpawnStructures.spawnRot;
         }
-        return SpawnStructures.spawnRot;
+        return par2;
     }
-
 }

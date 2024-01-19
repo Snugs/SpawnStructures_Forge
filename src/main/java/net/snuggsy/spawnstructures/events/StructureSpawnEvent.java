@@ -10,6 +10,7 @@ import net.snuggsy.spawnstructures.functions.BlockPosFunctions;
 public class StructureSpawnEvent {
     public static Rotation structureRotation;
     public static boolean genStructures = true;
+    public static boolean worldInit = false;
 
     public static boolean onWorldLoad(ServerLevel serverLevel, ServerLevelData serverLevelData) {
         WorldOptions worldGeneratorOptions = serverLevel.getServer().getWorldData().worldGenOptions();
@@ -25,6 +26,8 @@ public class StructureSpawnEvent {
         }
 
         serverLevel.setDefaultSpawnPos(SpawnStructures.spawnPos, SpawnStructures.spawnRot);
+        worldInit = true;
+        //String spawnDistance = CommandFunctions.getRawCommandOutput(serverLevel, null, "/gamerule spawnRadius 0");
 
         return true;
     }

@@ -7,12 +7,13 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.snuggsy.spawnstructures.events.ForgeStructureSpawnEvent;
+import net.snuggsy.spawnstructures.util.References;
 
-@Mod(SpawnStructures.MOD_ID)
+@Mod(References.MOD_ID)
 public class SpawnStructures {
-    public static final String MOD_ID = "spawnstructures_forge";
     public static BlockPos spawnPos;
     public static float spawnRot;
+
     public SpawnStructures() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::loadComplete);
