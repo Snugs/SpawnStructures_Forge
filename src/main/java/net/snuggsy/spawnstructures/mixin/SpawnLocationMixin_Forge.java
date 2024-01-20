@@ -16,7 +16,6 @@ public abstract class SpawnLocationMixin_Forge {
         if (!StructureSpawnEvent.genStructures) {
             return par1;
         } else if (StructureSpawnEvent.worldInit) {
-            StructureSpawnEvent.worldInit = false;
             return SpawnStructures.spawnPos;
         }
         return new BlockPos(par1.getX(), par1.getY() - 14, par1.getZ());
@@ -27,6 +26,7 @@ public abstract class SpawnLocationMixin_Forge {
         if (!StructureSpawnEvent.genStructures) {
             return par2;
         } else if (StructureSpawnEvent.worldInit) {
+            StructureSpawnEvent.worldInit = false;
             return SpawnStructures.spawnRot;
         }
         return par2;

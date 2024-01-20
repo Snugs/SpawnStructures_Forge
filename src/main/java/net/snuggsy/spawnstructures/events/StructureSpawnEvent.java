@@ -15,6 +15,7 @@ public class StructureSpawnEvent {
 
     public static boolean onWorldLoad(ServerLevel serverLevel, ServerLevelData serverLevelData) {
         WorldOptions worldGeneratorOptions = serverLevel.getServer().getWorldData().worldGenOptions();
+        String spawnDistance = CommandFunctions.getRawCommandOutput(serverLevel, null, "/gamerule spawnRadius 0");
 
         if (!worldGeneratorOptions.generateStructures()) {
             genStructures = false;
@@ -28,7 +29,6 @@ public class StructureSpawnEvent {
 
         serverLevel.setDefaultSpawnPos(SpawnStructures.spawnPos, SpawnStructures.spawnRot);
         worldInit = true;
-        String spawnDistance = CommandFunctions.getRawCommandOutput(serverLevel, null, "/gamerule spawnRadius 0");
 
         return true;
     }

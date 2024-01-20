@@ -53,7 +53,7 @@ public class BlockPosFunctions {
         }
 
         // Lower Y coordinate by height of structure roof compared to the intended spawn location
-        int loweredY = returnpos.getY() - 11;
+        int loweredY = returnpos.getY() - 14;
 
         returnpos = new BlockPos(returnpos.getX(), loweredY, returnpos.getZ()).immutable();
         return returnpos;
