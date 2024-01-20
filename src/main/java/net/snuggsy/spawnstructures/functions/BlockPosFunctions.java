@@ -23,20 +23,20 @@ public class BlockPosFunctions {
         int spawnX;
         int spawnZ;
         if (StructureSpawnEvent.structureRotation == Rotation.NONE){
-            spawnX = x + 13;
-            spawnZ = z + 13;
+            spawnX = x + 15;
+            spawnZ = z + 15;
             SpawnStructures.spawnRot = 180.0F;
         } else if (StructureSpawnEvent.structureRotation == Rotation.COUNTERCLOCKWISE_90) {
-            spawnX = x + 13;
-            spawnZ = z - 13;
+            spawnX = x + 15;
+            spawnZ = z - 15;
             SpawnStructures.spawnRot = 90.0F;
         } else if (StructureSpawnEvent.structureRotation == Rotation.CLOCKWISE_180) {
-            spawnX = x - 13;
-            spawnZ = z - 13;
+            spawnX = x - 15;
+            spawnZ = z - 15;
             SpawnStructures.spawnRot = 0.0F;
         } else {
-            spawnX = x - 13;
-            spawnZ = z + 13;
+            spawnX = x - 15;
+            spawnZ = z + 15;
             SpawnStructures.spawnRot = -90.0F;
         }
 

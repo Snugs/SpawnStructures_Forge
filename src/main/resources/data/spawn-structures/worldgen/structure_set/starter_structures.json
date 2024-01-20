@@ -11,6 +11,19 @@
     "distance": 0,
     "spread": 1,
     "count": 1,
-    "preferred_biomes": "#minecraft:is_overworld"
+    "preferred_biomes": [
+      "minecraft:birch_forest",
+      "minecraft:cherry_grove",
+      "minecraft:dark_forest",
+      "minecraft:desert",
+      "minecraft:flower_forest",
+      "minecraft:forest",
+      "minecraft:grove",
+      "minecraft:meadow",
+      "minecraft:plains",
+      "minecraft:savanna",
+      "minecraft:sunflower_plains",
+      "minecraft:taiga"
+    ]
   }
 }
