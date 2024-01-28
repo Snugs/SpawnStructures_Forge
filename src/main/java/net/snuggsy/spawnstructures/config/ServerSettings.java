@@ -2,7 +2,7 @@ package net.snuggsy.spawnstructures.config;
 
 public class ServerSettings {
 
-    public static boolean spawnWorldCentre = true;
+    public static boolean spawnWorldCentre = SpawnStructuresCommonConfigs.spawnWorldCentre.get();
 
     public static int spawnRadius = 0; // Options: -1 < spawnRadius < 4
 
@@ -16,7 +16,7 @@ public class ServerSettings {
 
     public static String substructure = "SUBSTRATE"; // Options: SUBSTRATE, MAP_ROOM
 
-    public static boolean ignoreGameruleGenStructures = true;
+    public static boolean ignoreGameruleGenStructures = SpawnStructuresCommonConfigs.ignoreGameruleGenStructures.get();
 
     public static boolean ignoreGameruleSpawnRadius = true;
 
