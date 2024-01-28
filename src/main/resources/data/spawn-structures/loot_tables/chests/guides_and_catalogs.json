@@ -88,6 +88,21 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
+              "tag": "{\"patchouli:book\": \"mythicmounts:mythical_mounts\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "patchouli:guide_book",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
               "tag": "{\"patchouli:book\": \"twilightdelight:twilight_guide\"}"
             }
           ]
