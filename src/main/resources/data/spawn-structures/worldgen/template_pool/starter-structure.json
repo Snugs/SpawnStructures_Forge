@@ -1,4 +1,5 @@
 {
+  "name": "spawn-structures:starter-structure",
   "fallback": "minecraft:empty",
   "elements": [
     {
@@ -6,7 +7,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "spawn-structures:cherry-blossom-01",
+        "location": "spawn-structures:starter-structure/cherry-blossom-02",
         "processors": "minecraft:empty"
       }
     }
