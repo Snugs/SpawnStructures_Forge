@@ -12,7 +12,7 @@ import net.snuggsy.spawnstructures.util.References;
 @Mod(References.MOD_ID)
 public class SpawnStructures {
     public static BlockPos spawnPos;
-    public static float spawnRot;
+    public static boolean changePos = false;
 
     public SpawnStructures() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

@@ -30,7 +30,7 @@ public abstract class SpawnLocationMixin_Forge {
             return par2;
         } else if (StructureSpawnEvent.worldInit) {
             StructureSpawnEvent.worldInit = false;
-            return SpawnStructures.spawnRot;
+            return StructureSpawnEvent.spawnRot(StructureSpawnEvent.structureRotation);
         }
         return par2;
     }

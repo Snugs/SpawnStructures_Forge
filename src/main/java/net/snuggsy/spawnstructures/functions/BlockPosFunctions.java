@@ -6,7 +6,6 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.Vec3;
-import net.snuggsy.spawnstructures.SpawnStructures;
 import net.snuggsy.spawnstructures.events.StructureSpawnEvent;
 
 import java.util.Arrays;
@@ -15,30 +14,9 @@ import java.util.List;
 public class BlockPosFunctions {
     public static List<MapColor> surfacematerials = Arrays.asList(MapColor.WATER, MapColor.ICE);
 
-    public static BlockPos getPlayerSpawnPos(ServerLevel serverLevel, int x, int z) {
+    public static BlockPos getPlayerSpawnPos(ServerLevel serverLevel, int spawnX, int spawnZ) {
         int highestY = serverLevel.getHeight();
         int lowestY = serverLevel.getMinBuildHeight();
-
-        // Set X and Z to be offset, adjusting for the central spawning location of the structure
-        int spawnX;
-        int spawnZ;
-        if (StructureSpawnEvent.structureRotation == Rotation.NONE){
-            spawnX = x + 15;
-            spawnZ = z + 15;
-            SpawnStructures.spawnRot = 180.0F;
-        } else if (StructureSpawnEvent.structureRotation == Rotation.COUNTERCLOCKWISE_90) {
-            spawnX = x + 15;
-            spawnZ = z - 15;
-            SpawnStructures.spawnRot = 90.0F;
-        } else if (StructureSpawnEvent.structureRotation == Rotation.CLOCKWISE_180) {
-            spawnX = x - 15;
-            spawnZ = z - 15;
-            SpawnStructures.spawnRot = 0.0F;
-        } else {
-            spawnX = x - 15;
-            spawnZ = z + 15;
-            SpawnStructures.spawnRot = -90.0F;
-        }
 
         BlockPos returnpos = new BlockPos(spawnX, highestY-1, spawnZ);
         BlockPos pos = new BlockPos(spawnX, highestY, spawnZ);
@@ -59,7 +37,7 @@ public class BlockPosFunctions {
         return returnpos;
     }
 
-    public static BlockPos getCenterStarterStructure(ServerLevel serverLevel) {
+    public static BlockPos getStarterStructureFromCentre(ServerLevel serverLevel) {
         return getStarterStructure(serverLevel, new BlockPos(0, 0, 0));
     }
     public static BlockPos getStarterStructure(ServerLevel serverLevel, BlockPos nearPos) {
@@ -87,7 +65,25 @@ public class BlockPosFunctions {
                 String sx = coords[0];
                 String sz = coords[2];
                 if (isNumeric(sx) && isNumeric(sz)) {
-                    return getPlayerSpawnPos(serverLevel, Integer.parseInt(sx), Integer.parseInt(sz));
+                    // Set X and Z to be offset, adjusting for the central spawning location of the structure
+                    int x = Integer.parseInt(sx);
+                    int z = Integer.parseInt(sz);
+                    int spawnX;
+                    int spawnZ;
+                    if (StructureSpawnEvent.structureRotation == Rotation.NONE){
+                        spawnX = x + 15;
+                        spawnZ = z + 15;
+                    } else if (StructureSpawnEvent.structureRotation == Rotation.COUNTERCLOCKWISE_90) {
+                        spawnX = x + 15;
+                        spawnZ = z - 15;
+                    } else if (StructureSpawnEvent.structureRotation == Rotation.CLOCKWISE_180) {
+                        spawnX = x - 15;
+                        spawnZ = z - 15;
+                    } else {
+                        spawnX = x - 15;
+                        spawnZ = z + 15;
+                    }
+                    return getPlayerSpawnPos(serverLevel, spawnX, spawnZ);
                 }
             }
         }
