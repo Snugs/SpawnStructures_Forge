@@ -42,10 +42,10 @@ public class StructureSpawnEvent {
             return false;
         } else if (!ignoreGameruleGenStructures && worldGeneratorOptions.generateStructures()) {
             SpawnStructures.changePos = true;
-            LOGGER.error("ChangePos set to TRUE");
+            //LOGGER.error("ChangePos set to TRUE");
         } else if (ignoreGameruleGenStructures) {
             SpawnStructures.changePos = true;
-            LOGGER.error("ChangePos set to TRUE");
+            //LOGGER.error("ChangePos set to TRUE");
         }
 
         // Set Spawn Radius Rules
@@ -71,7 +71,7 @@ public class StructureSpawnEvent {
         // Get Biome at Default Spawn
         currentBiomeHolder = serverLevel.getBiome(defaultSpawn);
         currentBiome = printBiome(currentBiomeHolder);
-        LOGGER.error("Current biome: " + currentBiome);
+        //LOGGER.error("Current biome: " + currentBiome);
 
         // Get New Spawn Position
         if (!spawnWorldCentre) {

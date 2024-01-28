@@ -34,25 +34,25 @@ public abstract class JigsawPlacementMixin {
     static final Logger LOGGER = LoggerFactory.getLogger(StructureSpawnEvent.class);
 
     @Unique
-    private static Holder<StructureTemplatePool> newPool;
-
+    private static Holder<StructureTemplatePool> startPool;
     @Unique
-    private static ResourceLocation nbtLocation = new ResourceLocation("spawn-structures", "starter-structure");
+    @Final
+    private static final ResourceLocation startPoolLocation = new ResourceLocation("spawn-structures", "starter-structure");
 
     @Inject(method = "addPieces(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/core/Holder;Ljava/util/Optional;ILnet/minecraft/core/BlockPos;ZLjava/util/Optional;I)Ljava/util/Optional;", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/Holder;value()Ljava/lang/Object;", shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILHARD)
     private static void injected(Structure.GenerationContext pContext, Holder<StructureTemplatePool> pStartPool, Optional<ResourceLocation> pStartJigsawName, int pMaxDepth, BlockPos pPos, boolean pUseExpansionHack, Optional<Heightmap.Types> pProjectStartToHeightmap, int pMaxDistanceFromCenter, CallbackInfoReturnable<Optional<Structure.GenerationStub>> cir, RegistryAccess registryaccess, ChunkGenerator chunkgenerator, StructureTemplateManager structuretemplatemanager, LevelHeightAccessor levelheightaccessor, WorldgenRandom worldgenrandom, Registry registry, Rotation rotation) {
-        newPool = pStartPool;
-        if (newPool.is(nbtLocation)){
+        startPool = pStartPool;
+        if (startPool.is(startPoolLocation)){
             StructureSpawnEvent.structureRotation = rotation;
-            LOGGER.error("ROTATION DETECTED EARLY:  " + rotation);
+            //LOGGER.error("ROTATION DETECTED EARLY:  " + rotation);
         }
     }
 
     @ModifyVariable(method = "addPieces(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/core/Holder;Ljava/util/Optional;ILnet/minecraft/core/BlockPos;ZLjava/util/Optional;I)Ljava/util/Optional;", at = @At("STORE"), ordinal = 2)
     private static BlockPos injected(BlockPos value){
         if (SpawnStructures.changePos) {
-            if (ServerSettings.spawnWorldCentre && newPool.is(nbtLocation)) {
-                LOGGER.error("Structure Location Changed!!!");
+            if (ServerSettings.spawnWorldCentre && startPool.is(startPoolLocation)) {
+                //LOGGER.error("Structure Location Changed!!!");
                 int structX;
                 int structZ;
                 if (StructureSpawnEvent.structureRotation == Rotation.CLOCKWISE_90) {
