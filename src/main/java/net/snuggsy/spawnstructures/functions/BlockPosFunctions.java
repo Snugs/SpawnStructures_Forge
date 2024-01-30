@@ -2,47 +2,50 @@ package net.snuggsy.spawnstructures.functions;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.Vec3;
-import net.snuggsy.spawnstructures.events.StructureSpawnEvent;
+import net.snuggsy.spawnstructures.data.StructureCoordinates;
 
-import java.util.Arrays;
-import java.util.List;
+import static net.snuggsy.spawnstructures.data.GlobalVariables.*;
+import static net.snuggsy.spawnstructures.data.ServerSettings.spawnWorldCentre;
+import static net.snuggsy.spawnstructures.functions.BlockRotFunctions.offsetSpawn;
+import static net.snuggsy.spawnstructures.functions.NumberFunctions.isNumeric;
 
 public class BlockPosFunctions {
-    public static List<MapColor> surfacematerials = Arrays.asList(MapColor.WATER, MapColor.ICE);
 
+    // Get the Players Spawn Position based on the Specified Location
     public static BlockPos getPlayerSpawnPos(ServerLevel serverLevel, int spawnX, int spawnZ) {
         int highestY = serverLevel.getHeight();
         int lowestY = serverLevel.getMinBuildHeight();
 
-        BlockPos returnpos = new BlockPos(spawnX, highestY-1, spawnZ);
-        BlockPos pos = new BlockPos(spawnX, highestY, spawnZ);
-        for (int y = highestY; y > lowestY; y--) {
-            BlockState blockState = serverLevel.getBlockState(pos);
-            MapColor material = blockState.getMapColor(serverLevel, pos);
-            if (blockState.getLightBlock(serverLevel, pos) >= 15 || surfacematerials.contains(material)) {
-                returnpos = pos.above().immutable();
-                break;
-            }
-            pos = pos.below();
+        if (!spawnWorldCentre){
+            BlockPos spawnPos = offsetSpawn(structureRotation, spawnX, spawnZ);
+            spawnX = spawnPos.getX();
+            spawnZ = spawnPos.getZ();
         }
 
-        // Lower Y coordinate by height of structure roof compared to the intended spawn location
-        int loweredY = returnpos.getY() - 14;
-
-        returnpos = new BlockPos(returnpos.getX(), loweredY, returnpos.getZ()).immutable();
-        return returnpos;
+        BlockPos returnPos = new BlockPos(spawnX, highestY-1, spawnZ);
+        BlockPos pPos = new BlockPos(spawnX, highestY, spawnZ);
+        for (int y = highestY; y > lowestY; y--) {
+            BlockState blockState = serverLevel.getBlockState(pPos);
+            MapColor material = blockState.getMapColor(serverLevel, pPos);
+            if (blockState.getLightBlock(serverLevel, pPos) >= 15 || surfacematerials.contains(material)) {
+                returnPos = pPos.above().immutable();
+                break;
+            }
+            pPos = pPos.below();
+        }
+        return new BlockPos(returnPos.getX(), returnPos.getY() - StructureCoordinates.spawnHeightOffset_CherryBlossom, returnPos.getZ()).immutable();
     }
 
+    // Get the closest Starter Structure to the centre of the world
     public static BlockPos getStarterStructureFromCentre(ServerLevel serverLevel) {
         return getStarterStructure(serverLevel, new BlockPos(0, 0, 0));
     }
+    // Get the closest Starter Structure from the specified coordinates
     public static BlockPos getStarterStructure(ServerLevel serverLevel, BlockPos nearPos) {
-        BlockPos starterStructure = null;
-        if (!serverLevel.getServer().getWorldData().worldGenOptions().generateStructures()) {
+        if (!worldGenOptions.generateStructures()) {
             return null;
         }
 
@@ -56,8 +59,7 @@ public class BlockPosFunctions {
                 }
                 String rawcoords = rawOutput.split("\\[")[1].split("]")[0];
                 coords = rawcoords.split(", ");
-            }
-            catch (IndexOutOfBoundsException ex) {
+            } catch (IndexOutOfBoundsException ex) {
                 return null;
             }
 
@@ -65,41 +67,10 @@ public class BlockPosFunctions {
                 String sx = coords[0];
                 String sz = coords[2];
                 if (isNumeric(sx) && isNumeric(sz)) {
-                    // Set X and Z to be offset, adjusting for the central spawning location of the structure
-                    int x = Integer.parseInt(sx);
-                    int z = Integer.parseInt(sz);
-                    int spawnX;
-                    int spawnZ;
-                    if (StructureSpawnEvent.structureRotation == Rotation.NONE){
-                        spawnX = x + 15;
-                        spawnZ = z + 15;
-                    } else if (StructureSpawnEvent.structureRotation == Rotation.COUNTERCLOCKWISE_90) {
-                        spawnX = x + 15;
-                        spawnZ = z - 15;
-                    } else if (StructureSpawnEvent.structureRotation == Rotation.CLOCKWISE_180) {
-                        spawnX = x - 15;
-                        spawnZ = z - 15;
-                    } else {
-                        spawnX = x - 15;
-                        spawnZ = z + 15;
-                    }
-                    return getPlayerSpawnPos(serverLevel, spawnX, spawnZ);
+                    return getPlayerSpawnPos(serverLevel, Integer.parseInt(sx), Integer.parseInt(sz));
                 }
             }
         }
-        return starterStructure;
-    }
-
-    public static boolean isNumeric(String string) {
-        if (string == null) {
-            return false;
-        }
-        try {
-            Double.parseDouble(string);
-        }
-        catch (NumberFormatException ex) {
-            return false;
-        }
-        return true;
+        return null;
     }
 }

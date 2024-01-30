@@ -2,7 +2,7 @@ package net.snuggsy.spawnstructures.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
-public class SpawnStructuresCommonConfigs {
+public class SpawnStructuresConfig_Common {
 
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static final ForgeConfigSpec SPEC;

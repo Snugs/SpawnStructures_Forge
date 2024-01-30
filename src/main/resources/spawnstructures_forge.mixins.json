@@ -4,7 +4,9 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "spawnstructures_forge.refmap.json",
   "mixins": [
+    "HandshakeHandlerMixin",
     "JigsawPlacementMixin",
+    "LoggerListenerMixin",
     "SpawnLocationMixin_Forge"
   ],
   "client": [
