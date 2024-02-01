@@ -4,9 +4,11 @@ import net.snuggsy.spawnstructures.config.SpawnStructuresConfig_Common;
 
 public class ServerSettings {
 
-    public static boolean spawnWorldCentre = SpawnStructuresConfig_Common.spawnWorldCentre.get();
+    public static boolean setWorldSpawn = SpawnStructuresConfig_Common.setWorldSpawn.get();
 
-    public static int spawnRadius = 0; // Options: -1 < spawnRadius < 4
+    public static String specifiedLocation = SpawnStructuresConfig_Common.specifiedLocation.get();
+
+    public static int spawnRadius = SpawnStructuresConfig_Common.setSpawnRadius.get();
 
     public static String spawnOrientation = "STRUCTURE_LOCKED"; // Options: STRUCTURE_LOCKED (Facing the door), RANDOMIZED, NORTH, EAST, SOUTH, WEST
 
@@ -20,6 +22,6 @@ public class ServerSettings {
 
     public static boolean ignoreGameruleGenStructures = SpawnStructuresConfig_Common.ignoreGameruleGenStructures.get();
 
-    public static boolean ignoreGameruleSpawnRadius = true;
+    public static boolean ignoreGameruleSpawnRadius = SpawnStructuresConfig_Common.ignoreGameruleSpawnRadius.get();
 
 }

@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Rotation;
 
 import static net.snuggsy.spawnstructures.data.StructureCoordinates.*;
+import static net.snuggsy.spawnstructures.data.GlobalVariables.*;
 
 public class BlockRotFunctions {
 
@@ -42,20 +43,20 @@ public class BlockRotFunctions {
 
     // Offset the Starter Structure Spawn Location dependent on Structure Rotation
     public static BlockPos offsetLocation (Rotation structureRotation) {
-        int structX;
-        int structZ;
+        int structX = structureLocation.getX();
+        int structZ = structureLocation.getZ();
         if (structureRotation == Rotation.CLOCKWISE_90) {
-            structX = boundingSize_CherryBlossom.getX() + spawnOffset_CherryBlossom.getX() - 1;
-            structZ = spawnOffset_CherryBlossom.getZ();
+            structX += boundingSize_CherryBlossom.getX() + spawnOffset_CherryBlossom.getX() - 1;
+            structZ += spawnOffset_CherryBlossom.getZ();
         } else if (structureRotation == Rotation.CLOCKWISE_180) {
-            structX = boundingSize_CherryBlossom.getX() + spawnOffset_CherryBlossom.getX() - 1;
-            structZ = boundingSize_CherryBlossom.getZ() + spawnOffset_CherryBlossom.getZ() - 1;
+            structX += boundingSize_CherryBlossom.getX() + spawnOffset_CherryBlossom.getX() - 1;
+            structZ += boundingSize_CherryBlossom.getZ() + spawnOffset_CherryBlossom.getZ() - 1;
         } else if (structureRotation == Rotation.COUNTERCLOCKWISE_90) {
-            structX = spawnOffset_CherryBlossom.getX();
-            structZ = boundingSize_CherryBlossom.getZ() + spawnOffset_CherryBlossom.getZ() - 1;
+            structX += spawnOffset_CherryBlossom.getX();
+            structZ += boundingSize_CherryBlossom.getZ() + spawnOffset_CherryBlossom.getZ() - 1;
         } else {
-            structX = spawnOffset_CherryBlossom.getX();
-            structZ = spawnOffset_CherryBlossom.getZ();
+            structX += spawnOffset_CherryBlossom.getX();
+            structZ += spawnOffset_CherryBlossom.getZ();
         }
         return new BlockPos(structX, 64, structZ);
     }
