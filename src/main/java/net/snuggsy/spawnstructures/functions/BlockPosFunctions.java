@@ -137,8 +137,8 @@ public class BlockPosFunctions {
             return null;
         }
 
-        int newX = rndHighest.below().getX();;
-        int newZ = rndHighest.below().getZ();;
+        int newX = rndHighest.below().getX();
+        int newZ = rndHighest.below().getZ();
         int scanDist = 10;
         for (int i = 0; i < 10; i++) {
             if (surfacematerials.contains(getBlockMaterial(serverLevel, rndHighest.below()))) {
