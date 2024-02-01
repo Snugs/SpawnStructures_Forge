@@ -26,3 +26,5 @@ forge*changelog.txt
 /run-data/logs/debug.log
 /run-data/config/fml.toml
 /run-data/logs/latest.log
+/src/main/java/net/snuggsy/spawnstructures/functions/JigsawPlacementFunctions.java
+/src/main/java/net/snuggsy/spawnstructures/functions/StartLocationFunction.java
