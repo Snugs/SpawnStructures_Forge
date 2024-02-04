@@ -1,14 +1,23 @@
 package net.snuggsy.spawnstructures.functions;
 
-import net.minecraft.core.BlockPos;
+import net.minecraft.core.*;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.phys.Vec3;
 import net.snuggsy.spawnstructures.data.StructureCoordinates;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static java.util.Objects.requireNonNull;
 import static net.snuggsy.spawnstructures.data.GlobalVariables.*;
-import static net.snuggsy.spawnstructures.data.ServerSettings.setWorldSpawn;
-import static net.snuggsy.spawnstructures.data.ServerSettings.specifiedLocation;
+import static net.snuggsy.spawnstructures.data.ServerSettings.*;
 import static net.snuggsy.spawnstructures.functions.GenerationFunctions.getBiome;
 import static net.snuggsy.spawnstructures.functions.NumberFunctions.*;
 
@@ -16,16 +25,64 @@ public class BlockPosFunctions {
 
     // Find Starter Structure Spawning Location
     public static void findStartingLocation(ServerLevel serverLevel, int n) {
-        if (setWorldSpawn) {
-            structureLocation = convertSpecifiedLocation(serverLevel, specifiedLocation);
+        if (!Objects.equals(biomeSelected, "ANY")) {
+            BlockPos searchLocation;
+            if (setWorldSpawn) {
+                searchLocation = convertCoordString(serverLevel, specifiedLocation, "XZ");
+            } else {
+                searchLocation = getHeighestBlock(serverLevel, 0,0);
+            }
+            AtomicInteger atomicBiomeCount = new AtomicInteger();
+            List<ResourceKey<Biome>> selectedBiomes = new ArrayList<>();
+            var biomes = serverLevel.registryAccess().registryOrThrow(Registries.BIOME);
+            //biomes.getTagNames().forEach(biomeTagKey -> LOGGER.info(biomeTagKey.toString()));
+            biomes.asLookup().listElementIds().forEach(biomeResourceKey -> {
+                if (biomeResourceKey.toString().contains(biomeSelected.toLowerCase())) {
+                    //newLog("Biome " + biomeSelected + " exists!");
+                    atomicBiomeCount.getAndIncrement();
+                    selectedBiomes.add(biomeResourceKey);
+                }
+                //LOGGER.info(biomeResourceKey.toString());
+            });
+            int selectedBiomeCount = atomicBiomeCount.intValue();
+            if (selectedBiomeCount == 0) {
+                LOGGER.error("[Spawn Structures] Value for 'Set Spawn Biome' could not be parsed! Please adjust the Config file...");
+            } else {
+                assert searchLocation != null;
+                ArrayList<BlockPos> biomeCoords = new ArrayList<>();
+                ArrayList<Integer> biomeDist = new ArrayList<>();
+                String biome = null;
+                for (int i = 0; i < selectedBiomeCount; i++) {
+                    String biomeKey = selectedBiomes.get(i).toString();
+                    if (biomeKey.contains("[") && biomeKey.contains("]") && biomeKey.contains(" / ")) {
+                        biome = biomeKey.split("/ ")[1].split("]")[0];
+                    }
+                    String rawBiomeCoords = CommandFunctions.getRawCommandOutput(serverLevel, Vec3.atBottomCenterOf(searchLocation), "/locate biome " + biome);
+                    biomeCoords.add(convertCoordString(serverLevel, rawBiomeCoords, "XYZ"));
+                    biomeDist.add(get3DCoordDist(searchLocation, biomeCoords.get(i)));
+                }
+                biome = selectedBiomes.get(getSmallestIntIndex(biomeDist)).toString().split("/ ")[1].split("]")[0];
+                BlockPos closestBiome = biomeCoords.get(getSmallestIntIndex(biomeDist));
+                BlockPos centreBiome = triangulateBiome(serverLevel, searchLocation, closestBiome, biome);
+                if (centreBiome != null) {
+                    structureLocation = getHeighestBlock(serverLevel, centreBiome.getX(), centreBiome.getZ());
+                } else {
+                    structureLocation = getHeighestBlock(serverLevel, closestBiome.getX(), closestBiome.getZ());
+                }
+            }
         } else {
-            structureLocation = BlockPosFunctions.loopRandomPosFromCenter(serverLevel, n);
+            if (setWorldSpawn) {
+                structureLocation = convertCoordString(serverLevel, specifiedLocation, "XZ");
+            } else {
+                structureLocation = BlockPosFunctions.loopRandomPosFromCenter(serverLevel, n);
+            }
         }
         // Revert the Starter Structure Spawning Location if necessary
         if (structureLocation == null) {
             LOGGER.error("[Spawn Structures] Starter Structure failed to find a suitable spawn location. Reverting to world center...");
             structureLocation = getHeighestBlock(serverLevel, 0, 0);
         }
+        structureLocation = getOptimalHeight(serverLevel, structureLocation, 10);
         structureLocation = new BlockPos(structureLocation.getX(), structureLocation.getY() - 1, structureLocation.getZ());
         changePos = true;
         LOGGER.error("Structure Location set to: " + structureLocation);
@@ -114,8 +171,10 @@ public class BlockPosFunctions {
         BlockPos possibleLocation = null;
         for (int i = 0; i < n; i++) {
             possibleLocation = BlockPosFunctions.getRandomPosNearby(serverLevel, nearPos);
-            if (possibleLocation != null) {
-                break;
+            if (possibleLocation != BlockPos.ZERO) {
+                if (possibleLocation != null) {
+                    break;
+                }
             }
         }
         return possibleLocation;
@@ -173,11 +232,6 @@ public class BlockPosFunctions {
                 }
             }
         }
-        BlockPos k0 = getHeighestBlock(serverLevel, newX, newZ);
-        BlockPos k1 = getHeighestBlock(serverLevel, newX+scanDist, newZ+scanDist);
-        BlockPos k2 = getHeighestBlock(serverLevel, newX-scanDist, newZ+scanDist);
-        BlockPos k3 = getHeighestBlock(serverLevel, newX+scanDist, newZ-scanDist);
-        BlockPos k4 = getHeighestBlock(serverLevel, newX-scanDist, newZ-scanDist);
-        return new BlockPos(newX, (k0.getY()+k1.getY()+k2.getY()+k3.getY()+k4.getY())/5, newZ);
+        return new BlockPos(newX, rndHighest.getY(), newZ);
     }
 }

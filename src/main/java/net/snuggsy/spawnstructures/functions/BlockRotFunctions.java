@@ -2,6 +2,7 @@ package net.snuggsy.spawnstructures.functions;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Rotation;
+import net.snuggsy.spawnstructures.data.ServerSettings;
 
 import static net.snuggsy.spawnstructures.data.StructureCoordinates.*;
 import static net.snuggsy.spawnstructures.data.GlobalVariables.*;
@@ -10,15 +11,24 @@ public class BlockRotFunctions {
 
     // Set the Player Spawn Rotation
     public static float spawnRot(Rotation structRot) {
-        float spawnRot;
-        if (structRot == Rotation.NONE){
-            spawnRot = 180.0F;
-        } else if (structRot == Rotation.COUNTERCLOCKWISE_90) {
-            spawnRot = 90.0F;
-        } else if (structRot == Rotation.CLOCKWISE_180) {
-            spawnRot = 0.0F;
-        } else {
-            spawnRot = -90.0F;
+        float spawnRot = 0.0F;
+        switch (ServerSettings.spawnOrientation.toUpperCase()) {
+            // Randomization happens during respawn
+            case "STRUCTURE_LOCKED", "STRUCTURE LOCKED", "RANDOMIZED", "RANDOMISED" -> {
+                if (structRot == Rotation.NONE) {
+                    spawnRot = 180.0F;
+                } else if (structRot == Rotation.COUNTERCLOCKWISE_90) {
+                    spawnRot = 90.0F;
+                } else if (structRot == Rotation.CLOCKWISE_180) {
+                    spawnRot = 0.0F;
+                } else {
+                    spawnRot = -90.0F;
+                }
+            }
+            case "NORTH" -> spawnRot = 180.0F;
+            case "EAST" -> spawnRot = 90.0F;
+            case "SOUTH" -> spawnRot = 0.0F;
+            case "WEST" -> spawnRot = -90.0F;
         }
         return spawnRot;
     }
