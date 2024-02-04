@@ -10,9 +10,9 @@ public class ServerSettings {
 
     public static int spawnRadius = SpawnStructuresConfig_Common.setSpawnRadius.get();
 
-    public static String spawnOrientation = "STRUCTURE_LOCKED"; // Options: STRUCTURE_LOCKED (Facing the door), RANDOMIZED, NORTH, EAST, SOUTH, WEST
+    public static String spawnOrientation = SpawnStructuresConfig_Common.setPlayerSpawnAngle.get(); // Options: STRUCTURE_LOCKED (Facing the door), RANDOMIZED, NORTH, EAST, SOUTH, WEST
 
-    public static String biomeSelected = "ANY"; // Options: ANY, (A list of all loaded biomes)
+    public static String biomeSelected = SpawnStructuresConfig_Common.setBiome.get(); // Options: ANY, (A list of all loaded biomes)
 
     public static boolean biomeDependantStructures = true;
 
