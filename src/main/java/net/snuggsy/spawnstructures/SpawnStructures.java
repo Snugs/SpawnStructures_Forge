@@ -11,14 +11,11 @@ import net.snuggsy.spawnstructures.config.SpawnStructuresConfig_Common;
 import net.snuggsy.spawnstructures.events.StructureSpawnEvent_Forge;
 import net.snuggsy.spawnstructures.util.References;
 
-import static net.snuggsy.spawnstructures.data.GlobalVariables.LOGGER;
-
 @Mod(References.MOD_ID)
 public class SpawnStructures {
 
     public SpawnStructures() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SpawnStructuresConfig_Common.SPEC, "Spawn Structures - Common.toml");
-        LOGGER.error("Spawn Structures Config Loaded.");
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::loadComplete);
     }
