@@ -1,7 +1,6 @@
 package net.snuggsy.spawnstructures.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
