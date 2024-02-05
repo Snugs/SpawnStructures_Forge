@@ -1,0 +1,44 @@
+{
+  "processors": [
+    {
+      "processor_type":"minecraft:rule",
+      "rules": [
+        {
+          "position_predicate":{
+            "predicate_type": "always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "block_match",
+            "block": "minecraft:grass_block"
+          },
+          "location_predicate": {
+            "predicate_type": "always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:podzol"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type":"minecraft:rule",
+      "rules": [
+        {
+          "position_predicate":{
+            "predicate_type": "always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "block_match",
+            "block": "minecraft:tall_grass"
+          },
+          "location_predicate": {
+            "predicate_type": "always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:large_fern"
+          }
+        }
+      ]
+    }
+  ]
+}

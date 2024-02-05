@@ -1,0 +1,84 @@
+{
+  "processors": [
+    {
+      "processor_type":"minecraft:rule",
+      "rules": [
+        {
+          "position_predicate":{
+            "predicate_type": "always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "block_match",
+            "block": "minecraft:dirt"
+          },
+          "location_predicate": {
+            "predicate_type": "always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:red_sandstone"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type":"minecraft:rule",
+      "rules": [
+        {
+          "position_predicate":{
+            "predicate_type": "always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "block_match",
+            "block": "minecraft:grass_block"
+          },
+          "location_predicate": {
+            "predicate_type": "always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:red_sand"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type":"minecraft:rule",
+      "rules": [
+        {
+          "position_predicate":{
+            "predicate_type": "always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "block_match",
+            "block": "minecraft:stone"
+          },
+          "location_predicate": {
+            "predicate_type": "always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:orange_terracotta"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type":"minecraft:rule",
+      "rules": [
+        {
+          "position_predicate":{
+            "predicate_type": "always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "block_match",
+            "block": "minecraft:tall_grass"
+          },
+          "location_predicate": {
+            "predicate_type": "always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:dead_bush"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "spawn-structures:starter-structures/pod_starter-structure",
+  "fallback": "spawn-structures:starter-structure",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "spawn-structures:starter-structure/cherry-blossom/pod-cherry-blossom",
+        "processors": "spawn-structures:structure/pod_substrate"
+      }
+    }
+  ]
+}
