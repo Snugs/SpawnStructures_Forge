@@ -9,12 +9,15 @@ import static net.snuggsy.spawnstructures.data.GlobalVariables.*;
 import static net.snuggsy.spawnstructures.data.ServerSettings.*;
 import static net.snuggsy.spawnstructures.functions.BlockPosFunctions.*;
 import static net.snuggsy.spawnstructures.functions.BlockRotFunctions.spawnRot;
+import static net.snuggsy.spawnstructures.functions.GenerationFunctions.getBiome;
 import static net.snuggsy.spawnstructures.functions.GenerationFunctions.placeStarterStructure;
 
 public class StructureSpawnEvent {
 
     public static boolean onWorldLoad(@NotNull ServerLevel serverLevel) {
         initReset();
+        //ResetChunksCommand.register(serverLevel.getServer().getCommands().getDispatcher());
+
         // Get WorldGen Options
         worldGenOptions = serverLevel.getServer().getWorldData().worldGenOptions();
 
@@ -33,6 +36,9 @@ public class StructureSpawnEvent {
 
         // Set the Starter Structure Location
         findStartingLocation(globalServerLevel, 100);
+
+        // Get the Biome at the Starter Structure Location
+        getBiome(serverLevel, structureLocation);
 
         return true;
     }

@@ -1,10 +1,7 @@
 package net.snuggsy.spawnstructures.functions;
 
-import net.minecraft.commands.arguments.coordinates.RotationArgument;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Rotations;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
@@ -59,6 +56,9 @@ public class NumberFunctions {
                 String sx = coords[0];
                 String sy = coords[1];
                 String sz = coords[arrayLength - 1];
+                if (Objects.equals(sy, "~")) {
+                    sy = "64";
+                }
                 if (isNumeric(sx) && isNumeric(sy) && isNumeric(sz)) {
                     if (mode.equals("XZ")) {
                         return getHeighestBlock(serverLevel, Integer.parseInt(sx), Integer.parseInt(sz));
@@ -135,25 +135,24 @@ public class NumberFunctions {
         if (startLocation == endLocation) {
             return endLocation;
         }
-        int scanDist = 160;
+        int scanDist = 128;
         double r = getBearingInDegrees(startLocation, endLocation);
-
         double r1 = convertBearingToRadians(r - 30.0D);
         double r2 = convertBearingToRadians(r + 30.0D);
-        BlockPos d1 = getCoordFromBearing(startLocation, endLocation, 128, r1);
-        BlockPos d2 = getCoordFromBearing(startLocation, endLocation, 128, r2);
+        BlockPos d1 = getCoordFromBearing(startLocation, endLocation, scanDist, r1);
+        BlockPos d2 = getCoordFromBearing(startLocation, endLocation, scanDist, r2);
         newLog("First position at: " + endLocation);
         newLog("Angle to First position: " + r);
         String nextBiomeCoords = CommandFunctions.getRawCommandOutput(serverLevel, Vec3.atBottomCenterOf(d1), "/locate biome " + biome);
         BlockPos nextPos1 = convertCoordString(serverLevel, nextBiomeCoords, "XYZ");
         newLog("Next position at: " + nextPos1);
         newLog("Angle to Next position: " + r1);
-        //newLog("Angle to Next position: " + Math.toRadians(r1));
+        //newLog("Angle to Next position: " + Math.toDegrees(r1));
         nextBiomeCoords = CommandFunctions.getRawCommandOutput(serverLevel, Vec3.atBottomCenterOf(d2), "/locate biome " + biome);
         BlockPos nextPos2 = convertCoordString(serverLevel, nextBiomeCoords, "XYZ");
         newLog("Last position at: " + nextPos2);
         newLog("Angle to Last position: " + r2);
-        //newLog("Angle to Last position: " + Math.toRadians(r2));
+        //newLog("Angle to Last position: " + Math.toDegrees(r2));
         assert nextPos1 != null;
         assert nextPos2 != null;
         return new BlockPos((endLocation.getX()+nextPos1.getX()+nextPos2.getX())/3, (endLocation.getY()+nextPos1.getY()+nextPos2.getY())/3,(endLocation.getZ()+nextPos1.getZ()+nextPos2.getZ())/3);
@@ -204,7 +203,6 @@ public class NumberFunctions {
             r = r + 90.0D;
         }
         return Math.toRadians(r);
-        //return r;
     }
 
     public static BlockPos getCoordFromBearing(BlockPos startPos, BlockPos endPos, Integer scanDist, Double r) {

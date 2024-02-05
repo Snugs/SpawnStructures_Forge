@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static java.util.Objects.requireNonNull;
 import static net.snuggsy.spawnstructures.data.GlobalVariables.*;
 import static net.snuggsy.spawnstructures.data.ServerSettings.*;
 import static net.snuggsy.spawnstructures.functions.GenerationFunctions.getBiome;
@@ -25,8 +24,9 @@ public class BlockPosFunctions {
 
     // Find Starter Structure Spawning Location
     public static void findStartingLocation(ServerLevel serverLevel, int n) {
-        if (!Objects.equals(biomeSelected, "ANY")) {
+        if (!Objects.equals(biomeSelected, "ANY") && !Objects.equals(biomeSelected, "ALL")) {
             BlockPos searchLocation;
+            List<String> moistExceptions = List.of("OCEAN", "RIVER", "SWAMP");
             if (setWorldSpawn) {
                 searchLocation = convertCoordString(serverLevel, specifiedLocation, "XZ");
             } else {
@@ -38,11 +38,9 @@ public class BlockPosFunctions {
             //biomes.getTagNames().forEach(biomeTagKey -> LOGGER.info(biomeTagKey.toString()));
             biomes.asLookup().listElementIds().forEach(biomeResourceKey -> {
                 if (biomeResourceKey.toString().contains(biomeSelected.toLowerCase())) {
-                    //newLog("Biome " + biomeSelected + " exists!");
                     atomicBiomeCount.getAndIncrement();
                     selectedBiomes.add(biomeResourceKey);
                 }
-                //LOGGER.info(biomeResourceKey.toString());
             });
             int selectedBiomeCount = atomicBiomeCount.intValue();
             if (selectedBiomeCount == 0) {
@@ -69,6 +67,16 @@ public class BlockPosFunctions {
                 } else {
                     structureLocation = getHeighestBlock(serverLevel, closestBiome.getX(), closestBiome.getZ());
                 }
+                boolean ignoreMoist = false;
+                for (String moistException : moistExceptions) {
+                    if (biome.contains(moistException.toLowerCase())) {
+                        ignoreMoist = true;
+                        break;
+                    }
+                }
+                if (!ignoreMoist) {
+                    structureLocation = checkMoist(serverLevel, structureLocation, 10);
+                }
             }
         } else {
             if (setWorldSpawn) {
@@ -83,7 +91,7 @@ public class BlockPosFunctions {
             structureLocation = getHeighestBlock(serverLevel, 0, 0);
         }
         structureLocation = getOptimalHeight(serverLevel, structureLocation, 10);
-        structureLocation = new BlockPos(structureLocation.getX(), structureLocation.getY() - 1, structureLocation.getZ());
+        structureLocation = structureLocation.above(2);
         changePos = true;
         LOGGER.error("Structure Location set to: " + structureLocation);
     }
@@ -195,12 +203,14 @@ public class BlockPosFunctions {
             LOGGER.error("Biome was an ocean... OOPS!");
             return null;
         }
+        return checkMoist(serverLevel, rndHighest.above(), 10);
+    }
 
-        int newX = rndHighest.below().getX();
-        int newZ = rndHighest.below().getZ();
-        int scanDist = 10;
+    public static BlockPos checkMoist(ServerLevel serverLevel, BlockPos searchPos, Integer scanDist) {
+        int newX = searchPos.below().getX();
+        int newZ = searchPos.below().getZ();
         for (int i = 0; i < 10; i++) {
-            if (surfacematerials.contains(getBlockMaterial(serverLevel, rndHighest.below()))) {
+            if (surfacematerials.contains(getBlockMaterial(serverLevel, searchPos.below()))) {
                 int bX = newX;
                 int bZ = newZ;
                 int fullCheck = 0;
@@ -232,6 +242,6 @@ public class BlockPosFunctions {
                 }
             }
         }
-        return new BlockPos(newX, rndHighest.getY(), newZ);
+        return new BlockPos(newX, searchPos.getY(), newZ);
     }
 }

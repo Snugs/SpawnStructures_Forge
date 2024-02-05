@@ -36,11 +36,11 @@ public abstract class SpawnLocationMixin_Forge {
     private float injected(float par2) {
         if (!genStructures) {
             return par2;
-        } else if (ServerSettings.spawnOrientation.equalsIgnoreCase("RANDOMIZED") || ServerSettings.spawnOrientation.equalsIgnoreCase("RANDOMISED")) {
-            return (float) (Math.random() * 360.0F) - 180.0F;
         } else if (worldInit) {
             worldInit = false;
             return spawnRot(structureRotation);
+        } else if (ServerSettings.spawnOrientation.equalsIgnoreCase("RANDOMIZED") || ServerSettings.spawnOrientation.equalsIgnoreCase("RANDOMISED")) {
+            return (float) (Math.random() * 360.0F) - 180.0F;
         }
         return globalServerLevel.getSharedSpawnAngle();
     }

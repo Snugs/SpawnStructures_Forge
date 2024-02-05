@@ -37,10 +37,11 @@ public class GlobalVariables {
     public static Rotation structureRotation;       // What direction did the Starter Structure generate facing
     public static BlockPos structureLocation;       // Coordinates selected for spawning the Starter Structure
     public static BlockPos structPos;
+    public static BlockPos originalPos;
 
     // Mixin Variables
     public static Holder<StructureTemplatePool> startPool;
-    public static final ResourceLocation startPoolLocation = new ResourceLocation("spawn-structures", "starter-structure");
+    public static ResourceLocation startPoolLocation = new ResourceLocation("spawn-structures", "starter-structure");
 
     // JigsawPlacement Parameters
     public static Structure.GenerationContext pContextJP;
