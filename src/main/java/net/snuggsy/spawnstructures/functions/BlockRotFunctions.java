@@ -2,17 +2,22 @@ package net.snuggsy.spawnstructures.functions;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Rotation;
+import net.snuggsy.spawnstructures.config.SpawnStructuresConfig_Common;
 import net.snuggsy.spawnstructures.data.ServerSettings;
 
-import static net.snuggsy.spawnstructures.data.StructureCoordinates.*;
-import static net.snuggsy.spawnstructures.data.GlobalVariables.*;
+import static net.snuggsy.spawnstructures.data.StructureCoordinates.boundingSize_CherryBlossom;
+import static net.snuggsy.spawnstructures.data.StructureCoordinates.spawnOffset_CherryBlossom;
 
 public class BlockRotFunctions {
 
     // Set the Player Spawn Rotation
     public static float spawnRot(Rotation structRot) {
         float spawnRot = 0.0F;
-        switch (ServerSettings.spawnOrientation.toUpperCase()) {
+        String spawnOrientation = ServerSettings.spawnOrientation.toUpperCase();
+        if (!SpawnStructuresConfig_Common.spawnOrientationOptions.contains(spawnOrientation)) {
+            spawnOrientation = "STRUCTURE_LOCKED";
+        }
+        switch (spawnOrientation) {
             // Randomization happens during respawn
             case "STRUCTURE_LOCKED", "STRUCTURE LOCKED", "RANDOMIZED", "RANDOMISED" -> {
                 if (structRot == Rotation.NONE) {
@@ -52,7 +57,7 @@ public class BlockRotFunctions {
     }
 
     // Offset the Starter Structure Spawn Location dependent on Structure Rotation
-    public static BlockPos offsetLocation (Rotation structureRotation) {
+    public static BlockPos offsetLocation (BlockPos structureLocation, Rotation structureRotation) {
         int structX = structureLocation.getX();
         int structZ = structureLocation.getZ();
         if (structureRotation == Rotation.CLOCKWISE_90) {
@@ -68,6 +73,6 @@ public class BlockRotFunctions {
             structX += spawnOffset_CherryBlossom.getX();
             structZ += spawnOffset_CherryBlossom.getZ();
         }
-        return new BlockPos(structX, 64, structZ);
+        return new BlockPos(structX, 0, structZ);
     }
 }
