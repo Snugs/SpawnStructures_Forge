@@ -33,6 +33,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.snuggsy.spawnstructures.data.StructureCoordinates;
 import org.apache.commons.lang3.mutable.MutableObject;
 
 import java.util.Deque;
@@ -71,6 +72,7 @@ public class StructureTypeCodec_StarterStructure_JigsawPlacement {
         newLog("Starter Structure rotation found...: " + rotation);
         newLog("Starter Structure pool: " + pStartPool);
 
+        structPos = new BlockPos(structPos.getX(), structPos.getY() + StructureCoordinates.getStructureOffset(chosenStructure).getY(), structPos.getZ());
         pPos = offsetLocation(structPos, structureRotation);
 
 

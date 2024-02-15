@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.Vec3;
 import net.snuggsy.spawnstructures.data.GlobalVariables;
-import net.snuggsy.spawnstructures.data.StructureCoordinates;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static net.snuggsy.spawnstructures.data.GlobalVariables.*;
 import static net.snuggsy.spawnstructures.data.ServerSettings.*;
+import static net.snuggsy.spawnstructures.data.StructureCoordinates.getHeightOffset;
 import static net.snuggsy.spawnstructures.functions.GenerationFunctions.getBiomeViaCommand;
 import static net.snuggsy.spawnstructures.functions.NumberFunctions.*;
 
@@ -118,7 +118,7 @@ public class BlockPosFunctions {
 
     // Get the Players Spawn Position based on the Specified Location
     public static BlockPos getPlayerDefaultSpawnPos(ServerLevel serverLevel, int spawnX, int spawnZ) {
-        return new BlockPos(getHeighestBlock(serverLevel, spawnX, spawnZ).below(StructureCoordinates.spawnHeightOffset_CherryBlossom)).immutable();
+        return new BlockPos(getHeighestBlock(serverLevel, spawnX, spawnZ).below(getHeightOffset(chosenStructure))).immutable();
     }
     public static BlockPos getPlayerRespawnPos(ServerLevel serverLevel, int spawnX, int spawnZ){
         int newX = spawnX + getRndSpawnRadius(serverLevel);
@@ -161,7 +161,7 @@ public class BlockPosFunctions {
     }
     // Try finding a random location near the specified coordinates a set amount of time
     public static BlockPos loopRandomPosNearby(ServerLevel serverLevel, BlockPos nearPos, int n) {
-        BlockPos possibleLocation = BlockPos.ZERO;
+        possibleLocation = BlockPos.ZERO;
         for (int i = 0; i < n; i++) {
             possibleLocation = BlockPosFunctions.getRandomPosNearby(serverLevel, nearPos);
             if (possibleLocation != BlockPos.ZERO && !Objects.equals(possibleLocation, new BlockPos(0, possibleLocation.getY(), 0))) {
