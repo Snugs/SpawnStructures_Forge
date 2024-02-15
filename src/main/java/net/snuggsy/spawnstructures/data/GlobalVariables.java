@@ -40,6 +40,8 @@ public class GlobalVariables {
     public static Rotation structureRotation;       // What direction did the Starter Structure generate facing
     public static BlockPos structureLocation;       // Coordinates selected for spawning the Starter Structure
     public static BlockPos structPos;
+    public static String chosenStructure;
+    public static BlockPos possibleLocation = BlockPos.ZERO;
 
     // Chunk Generator State
     public static List<BlockPos> posList = new ArrayList<>();
@@ -49,7 +51,6 @@ public class GlobalVariables {
     // Mixin Variables
     public static Holder<StructureTemplatePool> startPool;
     public static ResourceLocation startPoolLocation = new ResourceLocation("spawn-structures", "starter-structure");
-    public static ResourceLocation substrateLocation = new ResourceLocation("spawn-structures", "substructure");
     public static boolean logChunkAccess = false;
     public static int logChunkAccessCount = 0;
     public static ChunkPos spawnStructures_Forge$chunkPos;
@@ -74,7 +75,7 @@ public class GlobalVariables {
         }
     }
 
-    public static void initReset() {
+    public static void globalReset() {
         genStructures = true;
         changePos = false;
         placementReady = false;
@@ -84,5 +85,7 @@ public class GlobalVariables {
         logChunkAccessCount = 0;
         posList = new ArrayList<>();
         ChunkGeneratorState_StarterStructure.hasGeneratedPositions = false;
+        chosenStructure = StructureCoordinates.structureNames.get(0);
+        possibleLocation = BlockPos.ZERO;
     }
 }

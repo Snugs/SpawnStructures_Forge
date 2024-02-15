@@ -7,9 +7,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.phys.Vec3;
+import net.snuggsy.spawnstructures.config.SpawnStructuresConfig_Common;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 import static net.snuggsy.spawnstructures.data.GlobalVariables.*;
+import static net.snuggsy.spawnstructures.data.ServerSettings.structureSelected;
+import static net.snuggsy.spawnstructures.data.StructureCoordinates.getStructuresForBiome;
+import static net.snuggsy.spawnstructures.data.StructureCoordinates.structureNames;
 import static net.snuggsy.spawnstructures.functions.NumberFunctions.getOptimalHeight;
 
 public abstract class GenerationFunctions {
@@ -46,33 +52,86 @@ public abstract class GenerationFunctions {
 
     // Change Template Pool according to the current Biome
     public static Pair<String, ResourceLocation> setStartPool(ServerLevel serverLevel, BlockPos pPos) {
-        getBiomeViaCommand(serverLevel, pPos, "overworld");
-        String structure = "starter_structure";
-        if (currentBiome.contains("desert") || currentBiome.contains("beach")) {
-            structure = "biome-dependent/sand_starter_structure";
-            startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/sand_starter-structure");
-            substrateLocation = new ResourceLocation("spawn-structures", "substructures/sand_substrate");
-        } else if (currentBiome.contains("badlands") || currentBiome.contains("mesa")) {
-            structure = "biome-dependent/red_sand_starter_structure";
-            startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/red_sand_starter-structure");
-            substrateLocation = new ResourceLocation("spawn-structures", "substructures/red_sand_substrate");
-        } else if (currentBiome.contains("snowy")) {
-            structure = "biome-dependent/snow_starter_structure";
-            startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/snow_starter-structure");
-            substrateLocation = new ResourceLocation("spawn-structures", "substructures/snow_substrate");
-        } else if (currentBiome.contains("mushroom")) {
-            structure = "biome-dependent/myc_starter_structure";
-            startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/myc_starter-structure");
-            substrateLocation = new ResourceLocation("spawn-structures", "substructures/myc_substrate");
-        } else if (currentBiome.contains("frozen") || currentBiome.contains("ice")) {
-            structure = "biome-dependent/ice_starter_structure";
-            startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/ice_starter-structure");
-            substrateLocation = new ResourceLocation("spawn-structures", "substructures/ice_substrate");
-        } else if (currentBiome.contains("old_growth_spruce")) {
-            structure = "biome-dependent/pod_starter_structure";
-            startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/pod_starter-structure");
-            substrateLocation = new ResourceLocation("spawn-structures", "substructures/pod_substrate");
+        getBiomeViaCommand(serverLevel, new BlockPos(pPos.getX(), 300, pPos.getZ()), "overworld");
+
+        // Convert the Selected Structure to account for potential configuration errors
+        String structName = structureSelected.toUpperCase();
+        if (structName.contains(" ")) {
+            structName = structName.replace(" ", "_");
         }
+        if (!SpawnStructuresConfig_Common.starterStructureOptions.contains(structName)) {
+            LOGGER.error("[Spawn Structures] \"Selected Structure\" config option invalid! Reverting to Biome Dependent...");
+            structName = "BIOME_DEPENDENT";
+        }
+
+        // Select a Starter Structure according to the specified Configurations
+        if (structName.equals("BIOME_DEPENDENT") || structName.equals("BIOME_DEPENDANT")) {
+            List<String> potentialStructures = getStructuresForBiome(currentBiome);
+            if (potentialStructures.isEmpty()) {
+                chosenStructure = getRandomStringFromList(structureNames);
+            } else if (potentialStructures.size() == 1) {
+                chosenStructure = potentialStructures.get(0);
+            } else {
+                chosenStructure = getRandomStringFromList(potentialStructures);
+            }
+        } else if (structName.equals("RANDOMIZED") || structName.equals("RANDOMISED")) {
+            chosenStructure = getRandomStringFromList(structureNames);
+        } else {
+            for (String structureName : structureNames) {
+                if (structName.equals(structureName)) {
+                    chosenStructure = structureName;
+                    break;
+                }
+            }
+        }
+
+        // Select a Template Pool Resource Location for the selected Starter Structure according to the current Biome
+        String structure = chosenStructure.toLowerCase().replace("_", "-");
+        String substrate = "";
+        List<String> biomeTags = List.of("desert", "beach", "badlands", "mesa", "snowy", "peaks", "mushroom", "frozen", "ice", "old_growth_spruce");
+        for (String biomeTag : biomeTags) {
+            if (currentBiome.contains(biomeTag)) {
+                switch (biomeTag) {
+                    case "desert", "beach" -> {
+                        substrate = "sand";
+                    }
+                    case "badlands", "mesa" -> {
+                        substrate = "red_sand";
+                    }
+                    case "snowy", "peaks" -> {
+                        substrate = "snow";
+                    }
+                    case "mushroom" -> {
+                        substrate = "myc";
+                    }
+                    case "frozen", "ice" -> {
+                        substrate = "ice";
+                    }
+                    case "old_growth_spruce" -> {
+                        substrate = "pod";
+                    }
+                }
+            }
+        }
+        if (!substrate.isEmpty()) {
+            substrate = substrate + "_";
+        }
+        startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/" + structure + "/" + substrate + structure);
+        /*if (currentBiome.contains("desert") || currentBiome.contains("beach")) {
+            startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/cherry-blossom/sand_cherry-blossom");
+        } else if (currentBiome.contains("badlands") || currentBiome.contains("mesa")) {
+            startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/cherry-blossom/red_sand_cherry-blossom");
+        } else if (currentBiome.contains("snowy") || currentBiome.contains("peaks")) {
+            startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/cherry-blossom/snow_cherry-blossom");
+        } else if (currentBiome.contains("mushroom")) {
+            startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/cherry-blossom/myc_cherry-blossom");
+        } else if (currentBiome.contains("frozen") || currentBiome.contains("ice")) {
+            startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/cherry-blossom/ice_cherry-blossom");
+        } else if (currentBiome.contains("old_growth_spruce")) {
+            startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/cherry-blossom/pod_cherry-blossom");
+        } else {
+            startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/cherry-blossom/cherry-blossom");
+        }*/
         return new Pair<>(structure, startPoolLocation);
     }
 
@@ -99,5 +158,10 @@ public abstract class GenerationFunctions {
         }, (p_205367_) -> {
             return "[unregistered " + p_205367_ + "]";
         });
+    }
+
+    // Get random String from a List of strings
+    private static String getRandomStringFromList(List<String> list) {
+        return list.get((int) (Math.random() * list.size()));
     }
 }
