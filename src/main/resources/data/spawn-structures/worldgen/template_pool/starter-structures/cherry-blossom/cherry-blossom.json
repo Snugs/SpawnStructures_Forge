@@ -8,7 +8,7 @@
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
         "location": "spawn-structures:starter-structure/cherry-blossom",
-        "processors": "minecraft:empty"
+        "processors": "spawn-structures:default_substrate"
       }
     }
   ]
