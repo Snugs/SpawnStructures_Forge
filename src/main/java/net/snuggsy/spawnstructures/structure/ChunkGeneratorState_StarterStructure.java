@@ -110,8 +110,6 @@ public class ChunkGeneratorState_StarterStructure {
             Stopwatch stopwatch = Stopwatch.createStarted(Util.TICKER);
             List<CompletableFuture<ChunkPos>> posList = new ArrayList<>(count);
             ChunkPos structChunk = new ChunkPos(0,0);
-            String biomeLocation = CommandFunctions.getRawCommandOutput(globalServerLevel, Vec3.atBottomCenterOf(BlockPos.ZERO), "/locate biome minecraft:desert");
-            newLog(biomeLocation);
 
             // Set the Search Location
             setSearchLocation();
