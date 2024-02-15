@@ -113,7 +113,7 @@ public class BlockPosFunctions {
             spawnStructures_Forge$chunkPos = new ChunkPos(structureLocation);
         }
         changePos = true;
-        LOGGER.error("Structure Location set to: " + structureLocation);
+        newLog("Structure Location set to: " + structureLocation);
     }
 
     // Get the Players Spawn Position based on the Specified Location
@@ -183,11 +183,11 @@ public class BlockPosFunctions {
         BlockPos rndCoord = new BlockPos(x, y, z);
         BlockPos rndHighest = getHeighestBlock(serverLevel, rndCoord.getX(), rndCoord.getZ());
         String currentBiome = getBiomeViaCommand(serverLevel, rndHighest, "overworld");
-        LOGGER.error("Random position at: " + rndCoord);
-        LOGGER.error("Biome at random position: " + currentBiome);
+        newLog("Random position at: " + rndCoord);
+        newLog("Biome at random position: " + currentBiome);
         CharSequence ocean = "ocean";
         if (currentBiome.contains(ocean)) {
-            LOGGER.error("Biome was an ocean... OOPS!");
+            newLog("Biome was an ocean... OOPS!");
             return BlockPos.ZERO;
         }
         return checkMoist(serverLevel, rndHighest.above(), 10);
@@ -221,7 +221,7 @@ public class BlockPosFunctions {
                 fullCheck++;
             }
             if (newX == bX && newZ == bZ && fullCheck < 4) {
-                LOGGER.error("Biome was moist... OOPS!");
+                newLog("Biome was moist... OOPS!");
                 return null;
             } else if (fullCheck <= 1) {
                 break;
@@ -279,7 +279,7 @@ public class BlockPosFunctions {
                     }
                 }
                 if (newX == bX && newZ == bZ && fullCheck < 4) {
-                    LOGGER.error("Biome was moist... OOPS!");
+                    newLog("Biome was moist... OOPS!");
                     return null;
                 } else if (fullCheck <= 1) {
                     break;
