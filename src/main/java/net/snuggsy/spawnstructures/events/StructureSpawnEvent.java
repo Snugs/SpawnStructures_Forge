@@ -22,7 +22,7 @@ import static net.snuggsy.spawnstructures.functions.GenerationFunctions.placeSta
 public class StructureSpawnEvent {
 
     public static boolean onWorldLoad(@NotNull ServerLevel serverLevel) {
-        initReset();
+        globalReset();
         ResetChunksCommand.register(serverLevel.getServer().getCommands().getDispatcher());
 
         // Get WorldGen Options
