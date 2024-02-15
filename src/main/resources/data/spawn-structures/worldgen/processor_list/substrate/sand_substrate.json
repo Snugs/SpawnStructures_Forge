@@ -69,7 +69,7 @@
           },
           "input_predicate": {
             "predicate_type": "block_match",
-            "block": "minecraft:tall_grass"
+            "block": "minecraft:azure_bluet"
           },
           "location_predicate": {
             "predicate_type": "always_true"
