@@ -78,7 +78,7 @@ public class SpawnStructuresConfig_Common {
 
         setStarterStructure = BUILDER.comment(" Which Starter Structure should generate at the world Spawn Location?")
                 .comment(" Values: \"BIOME_DEPENDENT\", \"RANDOMIZED\", \"CHERRY_BLOSSOM\", \"LOG_CABIN\"")
-                .define("Biome Dependent Structures", starterStructureOptions.get(0));
+                .define("Starter Structure", starterStructureOptions.get(0));
 
         BUILDER.pop();
         SPEC = BUILDER.build();
