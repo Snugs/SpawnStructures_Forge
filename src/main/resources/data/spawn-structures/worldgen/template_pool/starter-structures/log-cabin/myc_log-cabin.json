@@ -1,13 +1,13 @@
 {
-  "name": "spawn-structures:starter-structures/myc_starter-structure",
-  "fallback": "spawn-structures:starter-structure",
+  "name": "spawn-structures:starter-structures/log-cabin/myc_log-cabin",
+  "fallback": "spawn-structures:starter-structures/log-cabin/log-cabin",
   "elements": [
     {
       "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "spawn-structures:starter-structure/cherry-blossom/myc-cherry-blossom",
+        "location": "spawn-structures:starter-structure/log-cabin",
         "processors": "spawn-structures:structure/myc_substrate"
       }
     }

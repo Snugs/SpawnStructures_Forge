@@ -29,6 +29,46 @@
           },
           "input_predicate": {
             "predicate_type": "block_match",
+            "block": "minecraft:podzol"
+          },
+          "location_predicate": {
+            "predicate_type": "always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:course_dirt"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type":"minecraft:rule",
+      "rules": [
+        {
+          "position_predicate":{
+            "predicate_type": "always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "block_match",
+            "block": "minecraft:andesite"
+          },
+          "location_predicate": {
+            "predicate_type": "always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:stone"
+          }
+        }
+      ]
+    },
+    {
+      "processor_type":"minecraft:rule",
+      "rules": [
+        {
+          "position_predicate":{
+            "predicate_type": "always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "block_match",
             "block": "minecraft:azure_bluet"
           },
           "location_predicate": {

@@ -1,5 +1,5 @@
 {
-  "name": "spawn-structures:substructure",
+  "name": "spawn-structures:starter-structures/cherry-blossom/cherry-blossom",
   "fallback": "minecraft:empty",
   "elements": [
     {
@@ -7,7 +7,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "spawn-structures:substructure/dirt_substrate",
+        "location": "spawn-structures:starter-structure/cherry-blossom",
         "processors": "minecraft:empty"
       }
     }

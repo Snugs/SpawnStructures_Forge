@@ -1,4 +1,5 @@
 {
+  "name": "spawn-structures:starter_structures/cherry-blossom",
   "type": "minecraft:jigsaw",
   "biomes": "#minecraft:is_overworld",
   "step": "surface_structures",
@@ -37,7 +38,7 @@
     }
   },
   "terrain_adaptation": "none",
-  "start_pool": "spawn-structures:starter-structures/red_sand_starter-structure",
+  "start_pool": "spawn-structures:starter-structures/cherry-blossom/cherry-blossom",
   "size": 3,
   "start_height": {
     "absolute": 0

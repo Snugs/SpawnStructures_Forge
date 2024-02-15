@@ -1,0 +1,15 @@
+{
+  "name": "spawn-structures:starter-structures/log-cabin/log-cabin",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "spawn-structures:starter-structure/log-cabin",
+        "processors": "minecraft:empty"
+      }
+    }
+  ]
+}
