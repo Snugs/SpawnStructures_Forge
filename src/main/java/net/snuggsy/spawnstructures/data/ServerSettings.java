@@ -14,9 +14,7 @@ public class ServerSettings {
 
     public static String biomeSelected = SpawnStructuresConfig_Common.setBiome.get(); // Options: ANY, (A list of all loaded biomes)
 
-    public static boolean biomeDependantStructures = true;
-
-    public static String structureSelected = "BIOME_DEPENDANT"; // Options: BIOME_DEPENDANT, CHERRY_BLOSSOM
+    public static String structureSelected = SpawnStructuresConfig_Common.setStarterStructure.get(); // Options: BIOME_DEPENDANT, RANDOMIZED, CHERRY_BLOSSOM, LOG_CABIN
 
     public static String substructure = "SUBSTRATE"; // Options: SUBSTRATE, MAP_ROOM
 

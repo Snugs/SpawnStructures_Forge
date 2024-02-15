@@ -19,7 +19,21 @@ public class SpawnStructuresConfig_Common {
     public static final ForgeConfigSpec.ConfigValue<Integer> setSpawnRadius;
     public static final ForgeConfigSpec.ConfigValue<String> setBiome;
     public static final ForgeConfigSpec.ConfigValue<String> setPlayerSpawnAngle;
-    public static final List<String> spawnOrientationOptions = List.of("STRUCTURE_LOCKED", "STRUCTURE LOCKED", "RANDOMIZED", "RANDOMISED", "NORTH", "EAST", "SOUTH", "WEST");
+    public static final ForgeConfigSpec.ConfigValue<String> setStarterStructure;
+    public static final List<String> spawnOrientationOptions = List.of(
+            "STRUCTURE_LOCKED", "STRUCTURE LOCKED",
+            "RANDOMIZED", "RANDOMISED",
+            "NORTH",
+            "EAST",
+            "SOUTH",
+            "WEST"
+    );
+    public static final List<String> starterStructureOptions = List.of(
+            "BIOME_DEPENDENT", "BIOME_DEPENDANT", "BIOME DEPENDENT", "BIOME DEPENDANT",
+            "RANDOMIZED", "RANDOMISED",
+            "CHERRY_BLOSSOM", "CHERRY BLOSSOM",
+            "LOG_CABIN", "LOG CABIN"
+    );
 
     static {
         BUILDER.push("Common Configs for " + References.NAME);
@@ -56,6 +70,15 @@ public class SpawnStructuresConfig_Common {
         setPlayerSpawnAngle = BUILDER.comment(" Which direction should the player spawn facing? (\"STRUCTURE_LOCKED\" usually means facing the Spawn Structure's door)")
                 .comment(" Values: \"STRUCTURE_LOCKED\", \"RANDOMIZED\", \"NORTH\", \"EAST\", \"SOUTH\", \"WEST\"   -->   Default Value: \"STRUCTURE_LOCKED\"")
                 .define("Spawn Orientation", spawnOrientationOptions.get(0));
+
+        BUILDER.comment("-----------------------------#");
+
+        BUILDER.pop();
+        BUILDER.push("Starter Structure Customization");
+
+        setStarterStructure = BUILDER.comment(" Which Starter Structure should generate at the world Spawn Location?")
+                .comment(" Values: \"BIOME_DEPENDENT\", \"RANDOMIZED\", \"CHERRY_BLOSSOM\", \"LOG_CABIN\"")
+                .define("Biome Dependent Structures", starterStructureOptions.get(0));
 
         BUILDER.pop();
         SPEC = BUILDER.build();
