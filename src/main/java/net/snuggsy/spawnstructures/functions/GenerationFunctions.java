@@ -87,52 +87,32 @@ public abstract class GenerationFunctions {
 
         // Select a Template Pool Resource Location for the selected Starter Structure according to the current Biome
         String structure = chosenStructure.toLowerCase().replace("_", "-");
+        String substrate = getSubstrate();
+        startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/" + structure + "/" + substrate + structure);
+        return new Pair<>(structure, startPoolLocation);
+    }
+
+    // Get the Substrate required for the Template Pool
+    @NotNull
+    private static String getSubstrate() {
         String substrate = "";
         List<String> biomeTags = List.of("desert", "beach", "badlands", "mesa", "snowy", "peaks", "mushroom", "frozen", "ice", "old_growth_spruce");
         for (String biomeTag : biomeTags) {
             if (currentBiome.contains(biomeTag)) {
                 switch (biomeTag) {
-                    case "desert", "beach" -> {
-                        substrate = "sand";
-                    }
-                    case "badlands", "mesa" -> {
-                        substrate = "red_sand";
-                    }
-                    case "snowy", "peaks" -> {
-                        substrate = "snow";
-                    }
-                    case "mushroom" -> {
-                        substrate = "myc";
-                    }
-                    case "frozen", "ice" -> {
-                        substrate = "ice";
-                    }
-                    case "old_growth_spruce" -> {
-                        substrate = "pod";
-                    }
+                    case "desert", "beach"      -> substrate = "sand";
+                    case "badlands", "mesa"     -> substrate = "red_sand";
+                    case "snowy", "peaks"       -> substrate = "snow";
+                    case "mushroom"             -> substrate = "myc";
+                    case "frozen", "ice"        -> substrate = "ice";
+                    case "old_growth_spruce"    -> substrate = "pod";
                 }
             }
         }
         if (!substrate.isEmpty()) {
             substrate = substrate + "_";
         }
-        startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/" + structure + "/" + substrate + structure);
-        /*if (currentBiome.contains("desert") || currentBiome.contains("beach")) {
-            startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/cherry-blossom/sand_cherry-blossom");
-        } else if (currentBiome.contains("badlands") || currentBiome.contains("mesa")) {
-            startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/cherry-blossom/red_sand_cherry-blossom");
-        } else if (currentBiome.contains("snowy") || currentBiome.contains("peaks")) {
-            startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/cherry-blossom/snow_cherry-blossom");
-        } else if (currentBiome.contains("mushroom")) {
-            startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/cherry-blossom/myc_cherry-blossom");
-        } else if (currentBiome.contains("frozen") || currentBiome.contains("ice")) {
-            startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/cherry-blossom/ice_cherry-blossom");
-        } else if (currentBiome.contains("old_growth_spruce")) {
-            startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/cherry-blossom/pod_cherry-blossom");
-        } else {
-            startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/cherry-blossom/cherry-blossom");
-        }*/
-        return new Pair<>(structure, startPoolLocation);
+        return substrate;
     }
 
     // Get Biome at Specified Location
