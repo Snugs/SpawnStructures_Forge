@@ -13,7 +13,8 @@ public abstract class LoggerListenerMixin {
 
     @Inject(method = "stop()V", at = @At("TAIL"))
     private void injected(CallbackInfo ci) {
-        if (!worldInit && changePos && genStructures) {
+        if (!worldInit && changePos && genStructures && genFailed) {
+            genFailed = false;
             placementReady = true;
         }
     }

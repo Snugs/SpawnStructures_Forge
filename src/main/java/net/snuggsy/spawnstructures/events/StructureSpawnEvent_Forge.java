@@ -8,9 +8,22 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static net.snuggsy.spawnstructures.data.GlobalVariables.globalServerLevel;
+import static net.snuggsy.spawnstructures.data.GlobalVariables.newLog;
 
 @Mod.EventBusSubscriber
 public class StructureSpawnEvent_Forge {
+
+    protected boolean serverLevelInit = false;
+
+    @SubscribeEvent
+    public void setServerLevel(LevelEvent server) {
+        if (!serverLevelInit) {
+            globalServerLevel = (ServerLevel) server.getLevel();
+            newLog("Server Level = " + globalServerLevel);
+            serverLevelInit = true;
+        }
+    }
+
     @SubscribeEvent(receiveCanceled = true)
     public void onWorldLoad(LevelEvent.CreateSpawnPosition e) {
         Level level = getWorld_IfInstance(e.getLevel());
@@ -18,6 +31,7 @@ public class StructureSpawnEvent_Forge {
             return;
         }
         globalServerLevel = (ServerLevel)level;
+        newLog("Server Level = " + globalServerLevel);
         if (StructureSpawnEvent.onWorldLoad(globalServerLevel)) {
             e.setCanceled(true);
         }

@@ -1,5 +1,6 @@
 package net.snuggsy.spawnstructures.functions;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.phys.Vec3;
@@ -8,8 +9,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import static net.minecraft.world.level.GameRules.RULE_SPAWN_RADIUS;
-import static net.snuggsy.spawnstructures.data.GlobalVariables.*;
+import static net.snuggsy.spawnstructures.data.GlobalVariables.LOGGER;
+import static net.snuggsy.spawnstructures.data.GlobalVariables.newLog;
 import static net.snuggsy.spawnstructures.functions.BlockPosFunctions.getHeighestBlock;
+import static net.snuggsy.spawnstructures.functions.GenerationFunctions.getBiomeViaCommand;
 
 public class NumberFunctions {
 
@@ -28,7 +31,7 @@ public class NumberFunctions {
 
     public static BlockPos convertCoordString(ServerLevel serverLevel, String specifiedLocation, String mode) {
         int arrayLength;
-        if (Objects.equals(mode, "XZ")) {
+        if (Objects.equals(mode, "XZ") || Objects.equals(mode, "XZ-C")) {
             arrayLength = 2;
         } else if (Objects.equals(mode, "XYZ")) {
             arrayLength = 3;
@@ -62,6 +65,8 @@ public class NumberFunctions {
                 if (isNumeric(sx) && isNumeric(sy) && isNumeric(sz)) {
                     if (mode.equals("XZ")) {
                         return getHeighestBlock(serverLevel, Integer.parseInt(sx), Integer.parseInt(sz));
+                    } else if (mode.equals("XZ-C")) {
+                        return new BlockPos(Integer.parseInt(sx), 0, Integer.parseInt(sz)); // pY is actually an offset
                     } else {
                         return new BlockPos(Integer.parseInt(sx), Integer.parseInt(sy), Integer.parseInt(sz));
                     }
@@ -73,7 +78,7 @@ public class NumberFunctions {
         return null;
     }
 
-    public static BlockPos getRndStructureCoordinates() {
+    public static Pair<Integer, Integer> getRndStructureCoordinates() {
         // Controllers
         double k = 4.25 * Math.PI; // T-Limits
         double a = 8.0;            // T-Multiplier
@@ -94,7 +99,9 @@ public class NumberFunctions {
                 f = Math.random()/Math.nextDown(1.0);
                 double f3 = (-k)*(1.0-f)+(k * f);
                 if (f3 <= r && f3 >= -r) {
-                    t = 3 * (f1 + f2 + f3);
+                    f = Math.random()/Math.nextDown(1.0);
+                    t = (-k)*(1.0-f)+(k * f);
+                    //t = 3 * (f1 + f2 + f3);
                 } else {
                     t = f3;
                 }
@@ -108,7 +115,7 @@ public class NumberFunctions {
         double fX = (a * Math.pow(t,b)) * Math.cos(t + (c * Math.PI));
         double fZ = (a * Math.pow(t,b)) * Math.sin(t + (c * Math.PI));
 
-        return new BlockPos((int) fX, 0, (int) fZ);
+        return new Pair<>((int) fX, (int) fZ);
     }
 
     public static Integer getRndSpawnRadius(ServerLevel serverLevel) {
@@ -131,7 +138,7 @@ public class NumberFunctions {
         return (int) dist;
     }
 
-    public static BlockPos triangulateBiome(ServerLevel serverLevel, BlockPos startLocation, BlockPos endLocation, String biome) {
+    public static BlockPos triangulateBiome(ServerLevel serverLevel, BlockPos startLocation, BlockPos endLocation, String biome, boolean logInfo) {
         if (startLocation == endLocation) {
             return endLocation;
         }
@@ -141,21 +148,32 @@ public class NumberFunctions {
         double r2 = convertBearingToRadians(r + 30.0D);
         BlockPos d1 = getCoordFromBearing(startLocation, endLocation, scanDist, r1);
         BlockPos d2 = getCoordFromBearing(startLocation, endLocation, scanDist, r2);
+        if (logInfo) {
         newLog("First position at: " + endLocation);
         newLog("Angle to First position: " + r);
+        }
         String nextBiomeCoords = CommandFunctions.getRawCommandOutput(serverLevel, Vec3.atBottomCenterOf(d1), "/locate biome " + biome);
         BlockPos nextPos1 = convertCoordString(serverLevel, nextBiomeCoords, "XYZ");
-        newLog("Next position at: " + nextPos1);
-        newLog("Angle to Next position: " + r1);
+        if (logInfo) {
+            newLog("Next position at: " + nextPos1);
+            newLog("Angle to Next position: " + r1);
+        }
         //newLog("Angle to Next position: " + Math.toDegrees(r1));
         nextBiomeCoords = CommandFunctions.getRawCommandOutput(serverLevel, Vec3.atBottomCenterOf(d2), "/locate biome " + biome);
         BlockPos nextPos2 = convertCoordString(serverLevel, nextBiomeCoords, "XYZ");
-        newLog("Last position at: " + nextPos2);
-        newLog("Angle to Last position: " + r2);
+        if (logInfo) {
+            newLog("Last position at: " + nextPos2);
+            newLog("Angle to Last position: " + r2);
+        }
         //newLog("Angle to Last position: " + Math.toDegrees(r2));
         assert nextPos1 != null;
         assert nextPos2 != null;
-        return new BlockPos((endLocation.getX()+nextPos1.getX()+nextPos2.getX())/3, (endLocation.getY()+nextPos1.getY()+nextPos2.getY())/3,(endLocation.getZ()+nextPos1.getZ()+nextPos2.getZ())/3);
+        BlockPos centrePos = new BlockPos((endLocation.getX()+nextPos1.getX()+nextPos2.getX())/3, (endLocation.getY()+nextPos1.getY()+nextPos2.getY())/3,(endLocation.getZ()+nextPos1.getZ()+nextPos2.getZ())/3);
+        if (Objects.equals(biome, getBiomeViaCommand(serverLevel, centrePos, "overworld"))) {
+            return centrePos;
+        } else {
+            return endLocation;
+        }
     }
 
     public static Double getBearingInDegrees(BlockPos startPos, BlockPos endPos) {
@@ -235,10 +253,8 @@ public class NumberFunctions {
     public static Integer getSmallestIntIndex(ArrayList<Integer> n) {
         int sIndex = 0;
         for (int i = 0; i < n.size(); i++) {
-            if (i != n.size() - 1) {
-                if (n.get(sIndex) > n.get(i+1)) {
-                    sIndex = i++;
-                }
+            if (n.get(sIndex) > n.get(i)) {
+                sIndex = i;
             }
         }
         return sIndex;

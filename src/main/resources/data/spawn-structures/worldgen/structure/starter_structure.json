@@ -1,5 +1,6 @@
 {
-  "type": "minecraft:jigsaw",
+  "name": "spawn-structures:starter_structure",
+  "type": "spawnstructures_forge:starter_structure",
   "biomes": "#minecraft:is_overworld",
   "step": "surface_structures",
   "spawn_overrides": {

@@ -1,6 +1,9 @@
 package net.snuggsy.spawnstructures.mixin;
 
-import net.minecraft.core.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.block.Rotation;
@@ -14,7 +17,9 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
@@ -34,17 +39,7 @@ public abstract class JigsawPlacementMixin {
         startPool = pStartPool;
         if (startPool.is(startPoolLocation) && !worldInit){
             structureRotation = rotation;
-            LOGGER.error("Starter Structure rotation found...");
-
-            // Record the parameters of the Starter Structure
-            pContextJP = pContext;
-            pStartPoolJP = pStartPool;
-            pStartJigsawNameJP = pStartJigsawName;
-            pMaxDepthJP = pMaxDepth;
-            pPosJP = pPos;
-            pUseExpansionHackJP = pUseExpansionHack;
-            pProjectStartToHeightmapJP = pProjectStartToHeightmap;
-            pMaxDistanceFromCenterJP = pMaxDistanceFromCenter;
+            newLog("Starter Structure rotation found...");
         }
     }
 
@@ -54,13 +49,9 @@ public abstract class JigsawPlacementMixin {
             if (changePos && placementReady) {
                 changePos = false;
                 worldInit = true;
-                return offsetLocation(structureRotation);
+                return offsetLocation(structureLocation, structureRotation);
             }
-            //LOGGER.error("Injection value received as: " + value + " while ChangePos was equal to TRUE");
         }
-        //LOGGER.error("Injection value received as: " + value);
-        //LOGGER.error("Injection value sent as: " + structPos);
         return value;
     }
-
 }

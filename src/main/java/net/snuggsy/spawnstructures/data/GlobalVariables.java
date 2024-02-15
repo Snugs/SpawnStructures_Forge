@@ -4,18 +4,21 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.WorldOptions;
-import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.material.MapColor;
+import net.snuggsy.spawnstructures.structure.ChunkGeneratorState_StarterStructure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 public class GlobalVariables {
 
@@ -37,34 +40,37 @@ public class GlobalVariables {
     public static Rotation structureRotation;       // What direction did the Starter Structure generate facing
     public static BlockPos structureLocation;       // Coordinates selected for spawning the Starter Structure
     public static BlockPos structPos;
-    public static BlockPos originalPos;
+
+    // Chunk Generator State
+    public static List<BlockPos> posList = new ArrayList<>();
+    public static BlockPos searchLocation;
+    public static final List<String> moistExceptions = List.of("OCEAN", "RIVER", "SWAMP");
 
     // Mixin Variables
     public static Holder<StructureTemplatePool> startPool;
     public static ResourceLocation startPoolLocation = new ResourceLocation("spawn-structures", "starter-structure");
+    public static ResourceLocation substrateLocation = new ResourceLocation("spawn-structures", "substructure");
+    public static boolean logChunkAccess = false;
+    public static int logChunkAccessCount = 0;
+    public static ChunkPos spawnStructures_Forge$chunkPos;
 
-    // JigsawPlacement Parameters
-    public static Structure.GenerationContext pContextJP;
-    public static Holder<StructureTemplatePool> pStartPoolJP;
-    public static Optional<ResourceLocation> pStartJigsawNameJP;
-    public static int pMaxDepthJP;
-    public static BlockPos pPosJP;
-    public static boolean pUseExpansionHackJP;
-    public static Optional<Heightmap.Types> pProjectStartToHeightmapJP;
-    public static int pMaxDistanceFromCenterJP;
+    public static RandomState randomState;
+    public static long levelSeed;
+    public static BiomeSource biomeSource;
+    public static List<Holder<StructureSet>> structureSets;
 
     // Biome Catching
     public static String currentBiome;              // The biome at specified coordinates, converted to a String
 
     // Materials
-    public static final List<MapColor> surfacematerials = Arrays.asList(MapColor.WATER, MapColor.ICE);
+    public static final List<MapColor> surfaceMaterials = Arrays.asList(MapColor.WATER, MapColor.ICE);
 
     // Logger
     public static final Logger LOGGER = LoggerFactory.getLogger(GlobalVariables.class);
-    private static final boolean devEnv = true;
+    public static final boolean devEnv = true;
     public static void newLog(String value) {
         if (devEnv) {
-            LOGGER.error(value);
+            LOGGER.info(value);
         }
     }
 
@@ -74,5 +80,9 @@ public class GlobalVariables {
         placementReady = false;
         genFailed = false;
         worldInit = false;
+        logChunkAccess = false;
+        logChunkAccessCount = 0;
+        posList = new ArrayList<>();
+        ChunkGeneratorState_StarterStructure.hasGeneratedPositions = false;
     }
 }

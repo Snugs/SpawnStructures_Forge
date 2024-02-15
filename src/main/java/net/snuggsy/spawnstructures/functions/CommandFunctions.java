@@ -12,6 +12,7 @@ import net.minecraft.world.level.BaseCommandBlock;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
+import net.snuggsy.spawnstructures.data.GlobalVariables;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -82,7 +83,7 @@ public class CommandFunctions {
         };
 
         bcb.setCommand(command);
-        bcb.setTrackOutput(true);
+        bcb.setTrackOutput(GlobalVariables.devEnv);
         bcb.performCommand(serverLevel);
 
         return bcb.getLastOutput().getString();

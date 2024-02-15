@@ -1,0 +1,18 @@
+{
+  "structures": [
+    {
+      "structure": "spawn-structures:starter_structure",
+      "weight": 1000
+    }
+  ],
+  "placement": {
+    "type": "spawnstructures_forge:custom_placement",
+    "salt": 1456544655,
+    "spacing": 12,
+    "separation": 6,
+    "distance": 10,
+    "spread": 6,
+    "count": 18,
+    "preferred_biomes": []
+  }
+}

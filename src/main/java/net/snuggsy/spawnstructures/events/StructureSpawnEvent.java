@@ -1,13 +1,20 @@
 package net.snuggsy.spawnstructures.events;
 
+import net.minecraft.CrashReport;
+import net.minecraft.CrashReportCategory;
+import net.minecraft.ReportedException;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.commands.ResetChunksCommand;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.ChunkPos;
 import net.snuggsy.spawnstructures.functions.BlockPosFunctions;
 import org.jetbrains.annotations.NotNull;
 
 import static net.minecraft.world.level.GameRules.RULE_SPAWN_RADIUS;
 import static net.snuggsy.spawnstructures.data.GlobalVariables.*;
 import static net.snuggsy.spawnstructures.data.ServerSettings.*;
-import static net.snuggsy.spawnstructures.functions.BlockPosFunctions.*;
+import static net.snuggsy.spawnstructures.functions.BlockPosFunctions.findStartingLocation;
+import static net.snuggsy.spawnstructures.functions.BlockPosFunctions.getHeighestBlock;
 import static net.snuggsy.spawnstructures.functions.BlockRotFunctions.spawnRot;
 import static net.snuggsy.spawnstructures.functions.GenerationFunctions.getBiome;
 import static net.snuggsy.spawnstructures.functions.GenerationFunctions.placeStarterStructure;
@@ -16,7 +23,7 @@ public class StructureSpawnEvent {
 
     public static boolean onWorldLoad(@NotNull ServerLevel serverLevel) {
         initReset();
-        //ResetChunksCommand.register(serverLevel.getServer().getCommands().getDispatcher());
+        ResetChunksCommand.register(serverLevel.getServer().getCommands().getDispatcher());
 
         // Get WorldGen Options
         worldGenOptions = serverLevel.getServer().getWorldData().worldGenOptions();
@@ -40,21 +47,59 @@ public class StructureSpawnEvent {
         // Get the Biome at the Starter Structure Location
         getBiome(serverLevel, structureLocation);
 
+        // Set the Default Spawning Location
+        if (worldGenOptions.generateStructures()) {
+            spawnPos = BlockPosFunctions.getPlayerDefaultSpawnPos(globalServerLevel, structureLocation.getX(), structureLocation.getZ());
+            if (genFailed) {
+                LOGGER.error("[Spawn Structures] Structure Generation FAILED. Reverting to secondary method...");
+                globalServerLevel.setDefaultSpawnPos(getHeighestBlock(globalServerLevel, 0, 0), 0.0F);
+            } else {
+                globalServerLevel.setDefaultSpawnPos(spawnPos, spawnRot(structureRotation));
+            }
+        } else {
+            genFailed = true;
+        }
+
         return true;
     }
 
     public static void postWorldGen() {
-        // Place the Starter Structure
-        structPos = structureLocation;
-        placeStarterStructure(globalServerLevel, structureLocation);
+        // Do we require using the Place command?
+        if (!worldGenOptions.generateStructures()) {
+            // Place the Starter Structure
+            placeStarterStructure(globalServerLevel, structureLocation);
 
-        // Set the Default Spawning Location
-        spawnPos = BlockPosFunctions.getPlayerDefaultSpawnPos(globalServerLevel, structPos.getX(), structPos.getZ());
-        if (genFailed) {
-            LOGGER.error("[Spawn Structures] Structure Generation FAILED");
-            globalServerLevel.setDefaultSpawnPos(getHeighestBlock(globalServerLevel, 0, 0), 0.0F);
-        } else {
-            globalServerLevel.setDefaultSpawnPos(spawnPos, spawnRot(structureRotation));
+            // Attempt to regenerate the features around the Starter Structure
+            BlockPos regenPos;
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    regenPos = new BlockPos(structureLocation.getX()-64+(16*i), structureLocation.getY(), structureLocation.getZ()-64+(16*j));
+                    globalServerLevel.setChunkForced(globalServerLevel.getChunkAt(regenPos).getPos().x, globalServerLevel.getChunkAt(regenPos).getPos().z,true);
+                    globalServerLevel.startTickingChunk(globalServerLevel.getChunk(regenPos.getX(), regenPos.getZ()));
+                    //newLog("ChunkStatus: " + globalServerLevel.getChunk(regenPos).getStatus());
+                    //newLog("ChunkType: " + globalServerLevel.getChunk(regenPos).getStatus().getChunkType());
+                    if (globalServerLevel.getChunk(regenPos).getStatus().toString().equals("minecraft:full")) {
+                        try {
+                            globalServerLevel.getChunkSource().getGenerator().applyBiomeDecoration(globalServerLevel, globalServerLevel.getChunk(regenPos), globalServerLevel.structureManager());
+                        } catch (Throwable throwable) {
+                            CrashReport crashreport = CrashReport.forThrowable(throwable, "[Spawn Structures] Reapplying Biome Decoration");
+                            CrashReportCategory crashreportcategory = crashreport.addCategory("Chunk generation error");
+                            crashreportcategory.setDetail("ChunkPos", new ChunkPos(regenPos));
+                            //crashreportcategory.setDetail("Name", () -> this.getName().getString());
+                            throw new ReportedException(crashreport);
+                        }
+                    }
+                }
+            }
+
+            // Set the Default Spawning Location
+            spawnPos = BlockPosFunctions.getPlayerDefaultSpawnPos(globalServerLevel, structureLocation.getX(), structureLocation.getZ());
+            if (genFailed) {
+                LOGGER.error("[Spawn Structures] Structure Placement FAILED");
+                globalServerLevel.setDefaultSpawnPos(getHeighestBlock(globalServerLevel, 0, 0), 0.0F);
+            } else {
+                globalServerLevel.setDefaultSpawnPos(spawnPos, spawnRot(structureRotation));
+            }
         }
 
         // Declare the World as Freshly Generated
