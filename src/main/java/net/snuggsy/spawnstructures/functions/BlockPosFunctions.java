@@ -85,7 +85,7 @@ public class BlockPosFunctions {
             // Set the Structure Location to be that of a random location near the world centre
             else {
                 structureLocation = BlockPos.ZERO;
-                BlockPos potentialPos = loopRandomPosFromCenter(serverLevel, 50);
+                BlockPos potentialPos = loopRandomPosFromCenter(serverLevel, n);
                 GlobalVariables.posList.add(potentialPos);
                 if (GlobalVariables.posList.size() > 1) {
                     for (BlockPos pos : GlobalVariables.posList) {
