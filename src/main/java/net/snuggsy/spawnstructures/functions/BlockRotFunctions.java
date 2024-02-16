@@ -5,10 +5,11 @@ import net.minecraft.world.level.block.Rotation;
 import net.snuggsy.spawnstructures.config.SpawnStructuresConfig_Common;
 import net.snuggsy.spawnstructures.data.ServerSettings;
 
+import java.util.Objects;
+
 import static net.snuggsy.spawnstructures.data.GlobalVariables.LOGGER;
 import static net.snuggsy.spawnstructures.data.GlobalVariables.chosenStructure;
-import static net.snuggsy.spawnstructures.data.StructureCoordinates.getStructureOffset;
-import static net.snuggsy.spawnstructures.data.StructureCoordinates.getStructureSize;
+import static net.snuggsy.spawnstructures.data.StructureCoordinates.*;
 
 public class BlockRotFunctions {
 
@@ -23,14 +24,18 @@ public class BlockRotFunctions {
         switch (spawnOrientation) {
             // Randomization happens during respawn
             case "STRUCTURE_LOCKED", "STRUCTURE LOCKED", "RANDOMIZED", "RANDOMISED" -> {
-                if (structRot == Rotation.NONE) {
-                    spawnRot = 180.0F;
-                } else if (structRot == Rotation.COUNTERCLOCKWISE_90) {
-                    spawnRot = 90.0F;
-                } else if (structRot == Rotation.CLOCKWISE_180) {
-                    spawnRot = 0.0F;
-                } else {
-                    spawnRot = -90.0F;
+                float orientation = 0.0F;
+                switch (Objects.requireNonNull(getStructureOrientation(chosenStructure))) {
+                    case NONE -> orientation = 0.0F;
+                    case CLOCKWISE_90 -> orientation = 90.0F;
+                    case CLOCKWISE_180 -> orientation = 180.0F;
+                    case COUNTERCLOCKWISE_90 -> orientation = -90.0F;
+                }
+                switch (structRot) {
+                    case NONE -> spawnRot = 180.0F + orientation;
+                    case CLOCKWISE_90 -> spawnRot = -90.0F + orientation;
+                    case CLOCKWISE_180 -> spawnRot = 0.0F + orientation;
+                    case COUNTERCLOCKWISE_90 -> spawnRot = 90.0F + orientation;
                 }
             }
             case "NORTH" -> spawnRot = 180.0F;
