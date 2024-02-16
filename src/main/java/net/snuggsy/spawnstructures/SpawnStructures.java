@@ -20,6 +20,7 @@ import net.snuggsy.spawnstructures.events.StructureSpawnEvent_Forge;
 import net.snuggsy.spawnstructures.structure.StructurePlacementTypeCodec_StarterStructure;
 import net.snuggsy.spawnstructures.structure.StructureTypeCodec_StarterStructure;
 
+import static net.snuggsy.spawnstructures.data.GlobalVariables.globalReset;
 import static net.snuggsy.spawnstructures.util.References.MOD_ID;
 
 @Mod(MOD_ID)
@@ -33,6 +34,7 @@ public class SpawnStructures {
 
     public SpawnStructures() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SpawnStructuresConfig_Common.SPEC, "Spawn Structures - Common.toml");
+        globalReset();
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         STRUCTURE_PLACEMENT.register(modEventBus);
         STRUCTURE_TYPE.register(modEventBus);
