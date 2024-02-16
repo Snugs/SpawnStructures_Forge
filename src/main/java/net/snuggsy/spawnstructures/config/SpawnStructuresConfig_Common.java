@@ -39,7 +39,7 @@ public class SpawnStructuresConfig_Common {
     static {
         BUILDER.push("Common Configs for " + References.NAME);
 
-        BUILDER.comment("-------------------------#");
+        BUILDER.comment("------------------------#");
 
         configVersion = BUILDER.define("Config Version", References.CONFIG_VERSION);
 
@@ -72,7 +72,7 @@ public class SpawnStructuresConfig_Common {
                 .comment(" Values: \"STRUCTURE_LOCKED\", \"RANDOMIZED\", \"NORTH\", \"EAST\", \"SOUTH\", \"WEST\"   -->   Default Value: \"STRUCTURE_LOCKED\"")
                 .define("Spawn Orientation", spawnOrientationOptions.get(0));
 
-        BUILDER.comment("-----------------------------#");
+        BUILDER.comment("---------------------------------#");
 
         BUILDER.pop();
         BUILDER.push("Starter Structure Customization");
