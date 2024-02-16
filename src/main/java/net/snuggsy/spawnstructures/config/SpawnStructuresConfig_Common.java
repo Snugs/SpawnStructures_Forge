@@ -32,7 +32,8 @@ public class SpawnStructuresConfig_Common {
             "BIOME_DEPENDENT", "BIOME_DEPENDANT", "BIOME DEPENDENT", "BIOME DEPENDANT",
             "RANDOMIZED", "RANDOMISED",
             "CHERRY_BLOSSOM", "CHERRY BLOSSOM",
-            "LOG_CABIN", "LOG CABIN"
+            "LOG_CABIN", "LOG CABIN",
+            "SAND_CASTLE", "SAND CASTLE"
     );
 
     static {
@@ -77,7 +78,7 @@ public class SpawnStructuresConfig_Common {
         BUILDER.push("Starter Structure Customization");
 
         setStarterStructure = BUILDER.comment(" Which Starter Structure should generate at the world Spawn Location?")
-                .comment(" Values: \"BIOME_DEPENDENT\", \"RANDOMIZED\", \"CHERRY_BLOSSOM\", \"LOG_CABIN\"")
+                .comment(" Values: \"BIOME_DEPENDENT\", \"RANDOMIZED\", \"CHERRY_BLOSSOM\", \"LOG_CABIN\", \"SAND_CASTLE\"")
                 .define("Starter Structure", starterStructureOptions.get(0));
 
         BUILDER.pop();
