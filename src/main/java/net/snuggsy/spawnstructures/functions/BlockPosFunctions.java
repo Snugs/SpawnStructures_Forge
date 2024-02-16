@@ -163,7 +163,7 @@ public class BlockPosFunctions {
     public static BlockPos loopRandomPosNearby(ServerLevel serverLevel, BlockPos nearPos, int n) {
         possibleLocation = BlockPos.ZERO;
         for (int i = 0; i < n; i++) {
-            possibleLocation = BlockPosFunctions.getRandomPosNearby(serverLevel, nearPos);
+            possibleLocation = getRandomPosNearby(serverLevel, nearPos);
             if (possibleLocation != BlockPos.ZERO && !Objects.equals(possibleLocation, new BlockPos(0, possibleLocation.getY(), 0))) {
                 break;
             }
@@ -222,7 +222,7 @@ public class BlockPosFunctions {
             }
             if (newX == bX && newZ == bZ && fullCheck < 4) {
                 newLog("Biome was moist... OOPS!");
-                return null;
+                return BlockPos.ZERO;
             } else if (fullCheck <= 1) {
                 break;
             }
