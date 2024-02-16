@@ -126,8 +126,10 @@ public abstract class GenerationFunctions {
         return currentBiome;
     }
     public static String getBiomeViaCommand(ServerLevel serverLevel, BlockPos pPos, String dimension) {
+        //LOGGER.error("BlockPos for getRawCommandOutput: " + pPos);
         String rawOutput = CommandFunctions.getRawCommandOutput(serverLevel, Vec3.atBottomCenterOf(pPos), "/locate biome #is_" + dimension.toLowerCase());
         //BlockPos biomeLocation = NumberFunctions.convertCoordString(serverLevel, rawOutput, "XYZ");
+        //LOGGER.error("rawOutput = " + rawOutput);
         currentBiome = rawOutput.split("\\(")[1].split("\\)")[0];
         //assert biomeLocation != null;
         //newLog("Found " + currentBiome + " at [" + biomeLocation.getX() + ", " + biomeLocation.getY() + ", " + biomeLocation.getZ() + "]");
