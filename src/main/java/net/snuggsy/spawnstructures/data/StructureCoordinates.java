@@ -61,36 +61,49 @@ public class StructureCoordinates {
     private static final List<String> biome_CherryBlossom = List.of("cherry", "birch");
 
     private static final String structureName_LogCabin = "LOG_CABIN";
-    private static final BlockPos spawnOffset_LogCabin = new BlockPos(-15,-11,-15);
+    private static final BlockPos spawnOffset_LogCabin = new BlockPos(-15,-12,-15);
     private static final BlockPos boundingSize_LogCabin = new BlockPos(31,31,31);
     private static final int spawnHeightOffset_LogCabin = 11;
     private static final String orientation_LogCabin = "NORTH";
     private static final List<String> biome_LogCabin = List.of("taiga", "snowy");
 
+    private static final String structureName_SandCastle = "SAND_CASTLE";
+    private static final BlockPos spawnOffset_SandCastle = new BlockPos(-15,-12,-15);
+    private static final BlockPos boundingSize_SandCastle = new BlockPos(31,31,31);
+    private static final int spawnHeightOffset_SandCastle = 0;
+    private static final String orientation_SandCastle = "NORTH";
+    private static final List<String> biome_SandCastle = List.of("desert", "badlands", "beach");
+
 
     //   Structure Variables compiled
     public static final List<String> structureNames = List.of(
             structureName_CherryBlossom,
-            structureName_LogCabin
+            structureName_LogCabin,
+            structureName_SandCastle
     );
     private static final List<BlockPos> spawnOffsets = List.of(
             spawnOffset_CherryBlossom,
-            spawnOffset_LogCabin
+            spawnOffset_LogCabin,
+            spawnOffset_SandCastle
     );
     private static final List<BlockPos> boundingSizes = List.of(
             boundingSize_CherryBlossom,
-            boundingSize_LogCabin
+            boundingSize_LogCabin,
+            boundingSize_SandCastle
     );
     private static final List<Integer> spawnHeightOffsets = List.of(
             spawnHeightOffset_CherryBlossom,
-            spawnHeightOffset_LogCabin
+            spawnHeightOffset_LogCabin,
+            spawnHeightOffset_SandCastle
     );
     private static final List<String> orientations = List.of(
             orientation_CherryBlossom,
-            orientation_LogCabin
+            orientation_LogCabin,
+            orientation_SandCastle
     );
     private static final List<List<String>> defaultBiomes = List.of(
             biome_CherryBlossom,
-            biome_LogCabin
+            biome_LogCabin,
+            biome_SandCastle
     );
 }
