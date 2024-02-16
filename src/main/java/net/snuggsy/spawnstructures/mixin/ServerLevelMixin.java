@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.function.Supplier;
 
+import static net.snuggsy.spawnstructures.data.GlobalVariables.globalReset;
 import static net.snuggsy.spawnstructures.data.GlobalVariables.globalServerLevel;
 
 @Mixin(ServerLevel.class)
@@ -59,6 +60,7 @@ public abstract class ServerLevelMixin extends Level {
             CallbackInfo ci
     ) {
         globalServerLevel = ServerLevel.class.cast(this);
+        globalReset();
     }
 
 }
