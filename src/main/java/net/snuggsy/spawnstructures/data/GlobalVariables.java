@@ -51,6 +51,7 @@ public class GlobalVariables {
     // Mixin Variables
     public static Holder<StructureTemplatePool> startPool;
     public static ResourceLocation startPoolLocation = new ResourceLocation("spawn-structures", "starter-structure");
+    public static ResourceLocation newPoolLocation = new ResourceLocation("spawn-structures", "starter-structure");
     public static boolean logChunkAccess = false;
     public static int logChunkAccessCount = 0;
     public static ChunkPos spawnStructures_Forge$chunkPos;

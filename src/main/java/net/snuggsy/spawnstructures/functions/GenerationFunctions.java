@@ -22,13 +22,14 @@ public abstract class GenerationFunctions {
 
     // Place the Starter Structure
     public static void placeStarterStructure(ServerLevel serverLevel, BlockPos pPos) {
-        pPos = getOptimalHeight(serverLevel, pPos, 10);
-        String posX = String.valueOf(pPos.getX());
-        String posY = String.valueOf(pPos.getY());
-        String posZ = String.valueOf(pPos.getZ());
         Pair<String, ResourceLocation> newTemplate = setStartPool(serverLevel, pPos);
+        pPos = getOptimalHeight(serverLevel, pPos, 10);
+        //String posX = String.valueOf(pPos.getX());
+        //String posY = String.valueOf(pPos.getY() + StructureCoordinates.getStructureOffset(chosenStructure).getY());
+        //String posZ = String.valueOf(pPos.getZ());
+        //pPos = new BlockPos(pPos.getX(), pPos.getY() + StructureCoordinates.getStructureOffset(chosenStructure).getY(), pPos.getZ());
         for (int i = 0; i < 10; i++) {
-            String placementConfirmation = CommandFunctions.getRawCommandOutput(serverLevel, Vec3.atBottomCenterOf(pPos), "/place structure spawn-structures:" + newTemplate.getFirst() + " " + posX + " " + posY + " " + posZ);
+            String placementConfirmation = CommandFunctions.getRawCommandOutput(serverLevel, Vec3.atBottomCenterOf(pPos), "/place structure spawn-structures:starter_structures/" + newTemplate.getFirst() + " ~ ~ ~" /*+ " " + posX + " " + posY + " " + posZ*/);
             LOGGER.error("Structure placement attempted!");
             LOGGER.error("Placement confirmation: " + placementConfirmation);
             if (!placementConfirmation.contains("That position is not loaded")) {
@@ -88,8 +89,9 @@ public abstract class GenerationFunctions {
         // Select a Template Pool Resource Location for the selected Starter Structure according to the current Biome
         String structure = chosenStructure.toLowerCase().replace("_", "-");
         String substrate = getSubstrate();
-        startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/" + structure + "/" + substrate + structure);
-        return new Pair<>(structure, startPoolLocation);
+        startPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/" + structure + "/" + structure);
+        newPoolLocation = new ResourceLocation("spawn-structures", "starter-structures/" + structure + "/" + substrate + structure);
+        return new Pair<>(structure, newPoolLocation);
     }
 
     // Get the Substrate required for the Template Pool
