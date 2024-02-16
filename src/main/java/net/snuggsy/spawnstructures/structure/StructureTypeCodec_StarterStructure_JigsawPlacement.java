@@ -64,7 +64,7 @@ public class StructureTypeCodec_StarterStructure_JigsawPlacement {
 
         setStartPool(globalServerLevel, pPos);
 
-        structuretemplatepool = registry.get(startPoolLocation);
+        structuretemplatepool = registry.get(newPoolLocation);
         assert structuretemplatepool != null;
         structurepoolelement = structuretemplatepool.getRandomTemplate(worldgenrandom);
 
