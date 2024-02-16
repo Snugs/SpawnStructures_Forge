@@ -8,6 +8,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.phys.Vec3;
 import net.snuggsy.spawnstructures.config.SpawnStructuresConfig_Common;
+import net.snuggsy.spawnstructures.data.StructureCoordinates;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -24,12 +25,12 @@ public abstract class GenerationFunctions {
     public static void placeStarterStructure(ServerLevel serverLevel, BlockPos pPos) {
         Pair<String, ResourceLocation> newTemplate = setStartPool(serverLevel, pPos);
         pPos = getOptimalHeight(serverLevel, pPos, 10);
-        //String posX = String.valueOf(pPos.getX());
-        //String posY = String.valueOf(pPos.getY() + StructureCoordinates.getStructureOffset(chosenStructure).getY());
-        //String posZ = String.valueOf(pPos.getZ());
+        String posX = String.valueOf(pPos.getX());
+        String posY = String.valueOf(pPos.getY() + StructureCoordinates.getStructureOffset(chosenStructure).getY());
+        String posZ = String.valueOf(pPos.getZ());
         //pPos = new BlockPos(pPos.getX(), pPos.getY() + StructureCoordinates.getStructureOffset(chosenStructure).getY(), pPos.getZ());
         for (int i = 0; i < 10; i++) {
-            String placementConfirmation = CommandFunctions.getRawCommandOutput(serverLevel, Vec3.atBottomCenterOf(pPos), "/place structure spawn-structures:starter_structures/" + newTemplate.getFirst() + " ~ ~ ~" /*+ " " + posX + " " + posY + " " + posZ*/);
+            String placementConfirmation = CommandFunctions.getRawCommandOutput(serverLevel, Vec3.atBottomCenterOf(pPos), "/place structure spawn-structures:starter_structures/" + newTemplate.getFirst()/* + " ~ ~ ~" */+ " " + posX + " " + posY + " " + posZ);
             LOGGER.error("Structure placement attempted!");
             LOGGER.error("Placement confirmation: " + placementConfirmation);
             if (!placementConfirmation.contains("That position is not loaded")) {
@@ -126,10 +127,11 @@ public abstract class GenerationFunctions {
     }
     public static String getBiomeViaCommand(ServerLevel serverLevel, BlockPos pPos, String dimension) {
         String rawOutput = CommandFunctions.getRawCommandOutput(serverLevel, Vec3.atBottomCenterOf(pPos), "/locate biome #is_" + dimension.toLowerCase());
-        BlockPos biomeLocation = NumberFunctions.convertCoordString(serverLevel, rawOutput, "XYZ");
+        //BlockPos biomeLocation = NumberFunctions.convertCoordString(serverLevel, rawOutput, "XYZ");
         currentBiome = rawOutput.split("\\(")[1].split("\\)")[0];
-        assert biomeLocation != null;
-        newLog("Found " + currentBiome + " at [" + biomeLocation.getX() + ", " + biomeLocation.getY() + ", " + biomeLocation.getZ() + "]");
+        //assert biomeLocation != null;
+        //newLog("Found " + currentBiome + " at [" + biomeLocation.getX() + ", " + biomeLocation.getY() + ", " + biomeLocation.getZ() + "]");
+        newLog("Found " + currentBiome + " at [" + pPos.getX() + ", " + pPos.getY() + ", " + pPos.getZ() + "]");
         return currentBiome;
     }
 
