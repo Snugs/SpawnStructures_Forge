@@ -4,7 +4,6 @@ import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.commands.ResetChunksCommand;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.snuggsy.spawnstructures.functions.BlockPosFunctions;
@@ -23,7 +22,6 @@ public class StructureSpawnEvent {
 
     public static boolean onWorldLoad(@NotNull ServerLevel serverLevel) {
         globalReset();
-        ResetChunksCommand.register(serverLevel.getServer().getCommands().getDispatcher());
 
         // Get WorldGen Options
         worldGenOptions = serverLevel.getServer().getWorldData().worldGenOptions();
@@ -55,6 +53,8 @@ public class StructureSpawnEvent {
                 globalServerLevel.setDefaultSpawnPos(getHeighestBlock(globalServerLevel, 0, 0), 0.0F);
             } else {
                 globalServerLevel.setDefaultSpawnPos(spawnPos, spawnRot(structureRotation));
+                // Declare the World as Freshly Generated
+                DeclareInit();
             }
         } else {
             genFailed = true;
@@ -103,6 +103,10 @@ public class StructureSpawnEvent {
         }
 
         // Declare the World as Freshly Generated
+        DeclareInit();
+    }
+
+    private static void DeclareInit() {
         placementReady = false;
         changePos = false;
         worldInit = true;
