@@ -1,5 +1,6 @@
 package net.snuggsy.spawnstructures.mixin;
 
+import net.minecraft.server.commands.ResetChunksCommand;
 import net.minecraft.server.level.progress.LoggerChunkProgressListener;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,5 +18,6 @@ public abstract class LoggerListenerMixin {
             genFailed = false;
             placementReady = true;
         }
+        ResetChunksCommand.register(globalServerLevel.getServer().getCommands().getDispatcher());
     }
 }
