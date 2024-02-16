@@ -1,11 +1,6 @@
 package net.snuggsy.spawnstructures.events;
 
-import net.minecraft.CrashReport;
-import net.minecraft.CrashReportCategory;
-import net.minecraft.ReportedException;
-import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.ChunkPos;
 import net.snuggsy.spawnstructures.functions.BlockPosFunctions;
 import org.jetbrains.annotations.NotNull;
 
@@ -70,9 +65,9 @@ public class StructureSpawnEvent {
             placeStarterStructure(globalServerLevel, structureLocation);
 
             // Attempt to regenerate the features around the Starter Structure
-            BlockPos regenPos;
-            for (int i = 0; i < 8; i++) {
-                for (int j = 0; j < 8; j++) {
+            /*BlockPos regenPos;
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 4; j++) {
                     regenPos = new BlockPos(structureLocation.getX()-64+(16*i), structureLocation.getY(), structureLocation.getZ()-64+(16*j));
                     globalServerLevel.setChunkForced(globalServerLevel.getChunkAt(regenPos).getPos().x, globalServerLevel.getChunkAt(regenPos).getPos().z,true);
                     globalServerLevel.startTickingChunk(globalServerLevel.getChunk(regenPos.getX(), regenPos.getZ()));
@@ -90,7 +85,7 @@ public class StructureSpawnEvent {
                         }
                     }
                 }
-            }
+            }*/
 
             // Set the Default Spawning Location
             spawnPos = BlockPosFunctions.getPlayerDefaultSpawnPos(globalServerLevel, structureLocation.getX(), structureLocation.getZ());
