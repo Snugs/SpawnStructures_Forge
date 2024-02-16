@@ -10,6 +10,7 @@
     "JigsawPlacementMixin",
     "LocateCommandMixin",
     "LoggerListenerMixin",
+    "ServerLevelMixin",
     "SpawnLocationMixin_Forge",
     "StructurePlacementMixin"
   ],
