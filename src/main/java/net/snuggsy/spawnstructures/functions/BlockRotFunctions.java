@@ -31,11 +31,14 @@ public class BlockRotFunctions {
                     case CLOCKWISE_180 -> orientation = 180.0F;
                     case COUNTERCLOCKWISE_90 -> orientation = -90.0F;
                 }
-                switch (structRot) {
-                    case NONE -> spawnRot = 180.0F + orientation;
-                    case CLOCKWISE_90 -> spawnRot = -90.0F + orientation;
-                    case CLOCKWISE_180 -> spawnRot = 0.0F + orientation;
-                    case COUNTERCLOCKWISE_90 -> spawnRot = 90.0F + orientation;
+                if (structRot == Rotation.NONE) {
+                    spawnRot = 180.0F + orientation;
+                } else if (structRot == Rotation.CLOCKWISE_90) {
+                    spawnRot = -90.0F + orientation;
+                } else if (structRot == Rotation.CLOCKWISE_180) {
+                    spawnRot = 0.0F + orientation;
+                } else if (structRot == Rotation.COUNTERCLOCKWISE_90) {
+                    spawnRot = 90.0F + orientation;
                 }
             }
             case "NORTH" -> spawnRot = 180.0F;
