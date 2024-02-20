@@ -69,7 +69,7 @@ public class GlobalVariables {
 
     // Logger
     public static final Logger LOGGER = LoggerFactory.getLogger(GlobalVariables.class);
-    public static final boolean devEnv = false;
+    public static final boolean devEnv = true;
     public static void newLog(String value) {
         if (devEnv) {
             LOGGER.info(value);
