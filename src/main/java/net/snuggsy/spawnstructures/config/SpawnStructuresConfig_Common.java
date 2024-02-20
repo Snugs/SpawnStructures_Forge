@@ -46,7 +46,9 @@ public class SpawnStructuresConfig_Common {
     static {
         BUILDER.push("Common Configs for " + References.NAME);
 
-        configVersion = BUILDER.comment("------------------------#")
+        configVersion = BUILDER.comment(" Mod Version:      v" + References.VERSION)
+                .comment(" Config Version:   v" + References.CONFIG_VERSION)
+                .comment("------------------------#")
                 .define("Config Version", References.CONFIG_VERSION);
 
         BUILDER.comment("----------------------------------#");
