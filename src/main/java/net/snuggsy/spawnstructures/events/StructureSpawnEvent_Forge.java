@@ -12,18 +12,6 @@ import static net.snuggsy.spawnstructures.data.GlobalVariables.newLog;
 
 @Mod.EventBusSubscriber
 public class StructureSpawnEvent_Forge {
-
-    protected boolean serverLevelInit = false;
-
-    @SubscribeEvent
-    public void setServerLevel(LevelEvent server) {
-        if (!serverLevelInit) {
-            globalServerLevel = (ServerLevel) server.getLevel();
-            newLog("Server Level = " + globalServerLevel);
-            serverLevelInit = true;
-        }
-    }
-
     @SubscribeEvent(receiveCanceled = true)
     public void onWorldLoad(LevelEvent.CreateSpawnPosition e) {
         Level level = getWorld_IfInstance(e.getLevel());

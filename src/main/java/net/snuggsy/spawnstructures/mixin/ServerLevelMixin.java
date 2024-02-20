@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.function.Supplier;
 
-import static net.snuggsy.spawnstructures.data.GlobalVariables.globalReset;
-import static net.snuggsy.spawnstructures.data.GlobalVariables.globalServerLevel;
+import static net.snuggsy.spawnstructures.data.GlobalVariables.*;
+import static net.snuggsy.spawnstructures.events.StructureSpawnEvent_Forge.getWorld_IfInstance;
 
 @Mixin(ServerLevel.class)
 public abstract class ServerLevelMixin extends Level {
@@ -59,8 +59,13 @@ public abstract class ServerLevelMixin extends Level {
             RandomSequences pRandomSequences,
             CallbackInfo ci
     ) {
-        globalServerLevel = ServerLevel.class.cast(this);
+        ServerLevel serverLevel = ServerLevel.class.cast(this);
+        Level level = getWorld_IfInstance(ServerLevel.class.cast(this));
+        if (level == null) {
+            return;
+        }
+        globalServerLevel = (ServerLevel)level;
+        newLog("Thee server est. " + globalServerLevel);
         globalReset();
     }
-
 }
