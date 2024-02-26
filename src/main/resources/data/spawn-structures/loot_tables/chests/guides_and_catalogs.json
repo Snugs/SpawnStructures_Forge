@@ -103,6 +103,36 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
+              "tag": "{\"patchouli:book\": \"divinerpg:divine\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "patchouli:guide_book",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{\"patchouli:book\": \"irons_spellbooks:iss_guide_book\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "patchouli:guide_book",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
               "tag": "{\"patchouli:book\": \"twilightdelight:twilight_guide\"}"
             }
           ]
