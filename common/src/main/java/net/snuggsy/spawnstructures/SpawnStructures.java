@@ -2,7 +2,7 @@ package net.snuggsy.spawnstructures;
 
 import net.minecraftforge.fml.common.Mod;
 
-import static net.snuggsy.spawnstructures.util.References.MOD_ID;
+import static net.snuggsy.spawnstructures.common.util.References.MOD_ID;
 
 @Mod(MOD_ID)
 public class SpawnStructures {

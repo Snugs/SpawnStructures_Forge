@@ -1,7 +1,7 @@
-package net.snuggsy.spawnstructures.config;
+package net.snuggsy.spawnstructures.common.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.snuggsy.spawnstructures.util.References;
+import net.snuggsy.spawnstructures.common.util.References;
 
 import java.util.Collections;
 import java.util.List;

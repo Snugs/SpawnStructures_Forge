@@ -1,4 +1,4 @@
-package net.snuggsy.spawnstructures.data;
+package net.snuggsy.spawnstructures.common.data;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;

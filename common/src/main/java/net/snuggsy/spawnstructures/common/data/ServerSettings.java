@@ -1,6 +1,6 @@
-package net.snuggsy.spawnstructures.data;
+package net.snuggsy.spawnstructures.common.data;
 
-import net.snuggsy.spawnstructures.config.SpawnStructuresConfig_Common;
+import net.snuggsy.spawnstructures.common.config.SpawnStructuresConfig_Common;
 
 public class ServerSettings {
 

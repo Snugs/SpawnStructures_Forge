@@ -1,11 +1,9 @@
-package net.snuggsy.spawnstructures.data;
+package net.snuggsy.spawnstructures.common.data;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Rotation;
 
 import java.util.List;
-
-import static net.snuggsy.spawnstructures.data.GlobalVariables.newLog;
 
 public class StructureCoordinates {
 
@@ -29,7 +27,7 @@ public class StructureCoordinates {
             case "SOUTH" -> {return Rotation.CLOCKWISE_180;}
             case "WEST" -> {return Rotation.COUNTERCLOCKWISE_90;}
         }
-        newLog("[Spawn Structures] Structure Orientation returned as NULL");
+        GlobalVariables.newLog("[Spawn Structures] Structure Orientation returned as NULL");
         return null;
     }
 
