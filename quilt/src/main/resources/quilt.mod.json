@@ -1,8 +1,9 @@
 {
-  "schemaVersion": 1,
+  "schema_version": 1,
   "quilt_loader": {
     "id": "${mod_id}",
     "version": "${version}",
+    "group": "${mod_group_id}",
     "entrypoints": {
       "init": "net.snuggsy.spawnstructures.quilt.SpawnStructuresQuilt"
     }

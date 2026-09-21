@@ -1,5 +1,10 @@
 package net.snuggsy.spawnstructures.fabric;
 
-public class SpawnStructuresFabric {
+import net.fabricmc.api.ModInitializer;
 
+public class SpawnStructuresFabric implements ModInitializer{
+    @Override
+    public void onInitialize() {
+
+    }
 }
