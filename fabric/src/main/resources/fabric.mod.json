@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "${mod_authors}"
+  ],
+  "license": "${mod_license}",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.snuggsy.spawnstructures.fabric.SpawnStructuresFabric"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.15.3",
+    "minecraft": "~1.20.1"
+  }
+}

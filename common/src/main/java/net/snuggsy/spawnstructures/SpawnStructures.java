@@ -1,10 +1,5 @@
 package net.snuggsy.spawnstructures;
 
-import net.minecraftforge.fml.common.Mod;
-
-import static net.snuggsy.spawnstructures.common.util.References.MOD_ID;
-
-@Mod(MOD_ID)
 public class SpawnStructures {
 /*
     private static final DeferredRegister<StructurePlacementType<?>> STRUCTURE_PLACEMENT = DeferredRegister.create(Registries.STRUCTURE_PLACEMENT, MOD_ID);

@@ -1,14 +1,33 @@
 pluginManagement {
     repositories {
         gradlePluginPortal()
+        mavenCentral()
+        maven {
+            name = 'Parchment'
+            url = 'https://maven.parchmentmc.org'
+        }
         maven {
             name = 'MinecraftForge'
             url = 'https://maven.minecraftforge.net/'
         }
-        maven { url = 'https://maven.parchmentmc.org' }
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        maven {
+            name = 'Quilt'
+            url = 'https://maven.quiltmc.org/'
+        }
     }
 }
 
 plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
 }
+
+rootProject.name = "Spawn Structures - Forge"
+
+include("common")
+include("forge")
+include("fabric")
+include("quilt")

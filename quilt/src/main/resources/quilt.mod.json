@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "quilt_loader": {
+    "id": "${mod_id}",
+    "version": "${version}",
+    "entrypoints": {
+      "init": "net.snuggsy.spawnstructures.quilt.SpawnStructuresQuilt"
+    }
+  },
+  "minecraft": {
+    "version": "~1.20.1"
+  }
+}
