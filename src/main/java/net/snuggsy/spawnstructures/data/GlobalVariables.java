@@ -12,7 +12,6 @@ import net.minecraft.world.level.levelgen.WorldOptions;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.material.MapColor;
-import net.snuggsy.spawnstructures.structure.ChunkGeneratorState_StarterStructure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,7 +84,7 @@ public class GlobalVariables {
         logChunkAccess = false;
         logChunkAccessCount = 0;
         posList = new ArrayList<>();
-        ChunkGeneratorState_StarterStructure.hasGeneratedPositions = false;
+        //ChunkGeneratorState_StarterStructure.hasGeneratedPositions = false;
         chosenStructure = StructureCoordinates.structureNames.get(0);
         possibleLocation = BlockPos.ZERO;
     }
