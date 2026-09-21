@@ -17,6 +17,7 @@ public class SpawnStructuresConfig_Common {
     public static final ForgeConfigSpec.ConfigValue<Boolean> setWorldSpawn;
     public static final ForgeConfigSpec.ConfigValue<String> specifiedLocation;
     public static final ForgeConfigSpec.ConfigValue<String> setBiome;
+    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> biomeExclusionList;
 
     public static final ForgeConfigSpec.ConfigValue<Boolean> ignoreGameruleGenStructures;
     public static final ForgeConfigSpec.ConfigValue<Boolean> ignoreGameruleSpawnRadius;
@@ -32,7 +33,7 @@ public class SpawnStructuresConfig_Common {
     );
 
     public static final ForgeConfigSpec.ConfigValue<String> setStarterStructure;
-    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> exclusionList;
+    public static final ForgeConfigSpec.ConfigValue<List<? extends String>> structureExclusionList;
     public static final List<String> starterStructureOptions = List.of(
             "BIOME_DEPENDENT", "BIOME_DEPENDANT", "BIOME DEPENDENT", "BIOME DEPENDANT",
             "RANDOMIZED", "RANDOMISED",
@@ -40,8 +41,10 @@ public class SpawnStructuresConfig_Common {
             "LOG_CABIN", "LOG CABIN",
             "SAND_CASTLE", "SAND CASTLE"
     );
+
     private static final List<? extends String> empty = Collections.emptyList();
-    private static final Predicate<Object> validator = o -> o instanceof String && ((String) o).contains(":");
+    private static final Predicate<Object> biomeValidator = o -> o instanceof String && ((String) o).contains(":");
+    private static final Predicate<Object> structureValidator = o -> o instanceof String && !((String) o).isEmpty();
 
     static {
         BUILDER.push("Common Configs for " + References.NAME);
@@ -64,6 +67,8 @@ public class SpawnStructuresConfig_Common {
                 .comment("    Example 1: \"MINECRAFT:CHERRY_GROVE\" will search specifically for the Cherry Grove biome.")
                 .comment("    Example 2: \"TAIGA\" will search for ANY Taiga biome, including the Snowy Taiga and Old Growth Taiga biomes.")
                 .define("Set Spawn Biome", "ANY");
+        biomeExclusionList = BUILDER.comment(" Which Biome(s) should be excluded from the search when \"Set Spawn Biome\" is NOT set to \"ANY\" or \"ALL\"?")
+                .defineListAllowEmpty("Exclusion List", empty, biomeValidator);
 
         BUILDER.comment("--------------------#");
 
@@ -88,8 +93,8 @@ public class SpawnStructuresConfig_Common {
         setStarterStructure = BUILDER.comment(" Which Starter Structure should generate at the world Spawn Location?")
                 .comment(" Values: \"BIOME_DEPENDENT\", \"RANDOMIZED\", \"CHERRY_BLOSSOM\", \"LOG_CABIN\", \"SAND_CASTLE\"")
                 .define("Generated Starter Structure", starterStructureOptions.get(0));
-        exclusionList = BUILDER.comment(" Which Starter Structure(s) should be excluded from Biome Dependent and Randomized generation?")
-                .defineListAllowEmpty("Exclusion List", empty, validator);
+        structureExclusionList = BUILDER.comment(" Which Starter Structure(s) should be excluded from Biome Dependent and Randomized generation?")
+                .defineListAllowEmpty("Exclusion List", empty, structureValidator);
 
         BUILDER.pop();
         SPEC = BUILDER.build();
