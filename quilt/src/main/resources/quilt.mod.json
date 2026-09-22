@@ -3,7 +3,7 @@
   "quilt_loader": {
     "id": "spawnstructures",
     "version": "${version}",
-    "group": "SnugsMods",
+    "group": "snuggsy",
     "entrypoints": {
       "init": "net.snuggsy.spawnstructures.quilt.SpawnStructuresQuilt"
     }
