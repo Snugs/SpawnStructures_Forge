@@ -7,5 +7,6 @@ java {
 }
 
 dependencies {
-
+    implementation "com.mojang:datafixerupper:4.0.26"
+    implementation "org.slf4j:slf4j-api:2.0.7"
 }
