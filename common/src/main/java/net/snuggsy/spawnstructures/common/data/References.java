@@ -1,4 +1,4 @@
-package net.snuggsy.spawnstructures.common.util;
+package net.snuggsy.spawnstructures.common.data;
 
 import com.mojang.datafixers.util.Pair;
 
