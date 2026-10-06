@@ -19,7 +19,7 @@ public final class SpawnStructuresConfig_Forge {
     public static final ForgeConfigSpec.ConfigValue<String> setBiome;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> biomeExclusionList;
 
-    // Gamerule Overrides
+    // GameRule Overrides
     public static final ForgeConfigSpec.ConfigValue<Boolean> ignoreGameruleGenStructures;
     public static final ForgeConfigSpec.ConfigValue<Boolean> ignoreGameruleSpawnRadius;
     public static final ForgeConfigSpec.ConfigValue<Integer> setSpawnRadius;
