@@ -20,7 +20,7 @@ public class SpawnStructuresForge {
         ModLoadingContext.get().registerConfig(
                 ModConfig.Type.COMMON,
                 SpawnStructuresConfig_Forge.SPEC,
-                References.CONFIG_FILENAME
+                References.CONFIG_FILENAME + ".toml"
         );
 
     }
