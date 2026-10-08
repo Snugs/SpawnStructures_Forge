@@ -1,4 +1,4 @@
-package net.snuggsy.spawnstructures.quilt.config;
+package net.snuggsy.spawnstructures.fabric.config;
 
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
@@ -8,7 +8,7 @@ import net.snuggsy.spawnstructures.common.data.References;
 import java.util.List;
 
 @Config(name = References.CONFIG_FILENAME)
-public class SpawnStructuresConfig_Quilt implements ConfigData {
+public class FabricConfig_Builder implements ConfigData {
     // Starter Structure Spawn Location
     public boolean setWorldSpawn = CommonConfig_Defaults.DEFAULT_SET_WORLD_SPAWN;
     public String specifiedLocation = CommonConfig_Defaults.DEFAULT_SPECIFIED_LOCATION;

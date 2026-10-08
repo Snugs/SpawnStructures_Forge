@@ -6,8 +6,8 @@ import java.util.List;
 
 public final class QuiltConfig_Values {
     // Getter
-    private static SpawnStructuresConfig_Quilt get() {
-        return AutoConfig.getConfigHolder(SpawnStructuresConfig_Quilt.class).getConfig();
+    private static QuiltConfig_Builder get() {
+        return AutoConfig.getConfigHolder(QuiltConfig_Builder.class).getConfig();
     }
 
     // Accessors

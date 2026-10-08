@@ -19,18 +19,18 @@ public final class ForgeConfig_Values {
 
     // Cache Refresher
     public static void Refresh() {
-        setWorldSpawn = SpawnStructuresConfig_Forge.setWorldSpawn.get();
-        specifiedLocation = SpawnStructuresConfig_Forge.specifiedLocation.get();
-        setBiome = SpawnStructuresConfig_Forge.setBiome.get();
-        biomeExclusionList = List.copyOf(SpawnStructuresConfig_Forge.biomeExclusionList.get());
+        setWorldSpawn = ForgeConfig_Builder.setWorldSpawn.get();
+        specifiedLocation = ForgeConfig_Builder.specifiedLocation.get();
+        setBiome = ForgeConfig_Builder.setBiome.get();
+        biomeExclusionList = List.copyOf(ForgeConfig_Builder.biomeExclusionList.get());
 
-        ignoreGameruleGenStructures = SpawnStructuresConfig_Forge.ignoreGameruleGenStructures.get();
-        ignoreGameruleSpawnRadius = SpawnStructuresConfig_Forge.ignoreGameruleSpawnRadius.get();
-        setSpawnRadius = SpawnStructuresConfig_Forge.setSpawnRadius.get();
-        setPlayerSpawnAngle = SpawnStructuresConfig_Forge.setPlayerSpawnAngle.get();
+        ignoreGameruleGenStructures = ForgeConfig_Builder.ignoreGameruleGenStructures.get();
+        ignoreGameruleSpawnRadius = ForgeConfig_Builder.ignoreGameruleSpawnRadius.get();
+        setSpawnRadius = ForgeConfig_Builder.setSpawnRadius.get();
+        setPlayerSpawnAngle = ForgeConfig_Builder.setPlayerSpawnAngle.get();
 
-        setStarterStructure = SpawnStructuresConfig_Forge.setStarterStructure.get();
-        structureExclusionList = List.copyOf(SpawnStructuresConfig_Forge.structureExclusionList.get());
+        setStarterStructure = ForgeConfig_Builder.setStarterStructure.get();
+        structureExclusionList = List.copyOf(ForgeConfig_Builder.structureExclusionList.get());
     }
 
     // Accessors

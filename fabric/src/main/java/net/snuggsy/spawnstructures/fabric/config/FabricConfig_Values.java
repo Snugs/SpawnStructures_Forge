@@ -6,8 +6,8 @@ import java.util.List;
 
 public final class FabricConfig_Values {
     // Getter
-    private static SpawnStructuresConfig_Fabric get() {
-        return AutoConfig.getConfigHolder(SpawnStructuresConfig_Fabric.class).getConfig();
+    private static FabricConfig_Builder get() {
+        return AutoConfig.getConfigHolder(FabricConfig_Builder.class).getConfig();
     }
 
     // Accessors

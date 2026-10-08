@@ -7,7 +7,7 @@ import net.snuggsy.spawnstructures.common.data.References;
 
 import java.util.List;
 
-public final class SpawnStructuresConfig_Forge {
+public final class ForgeConfig_Builder {
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
     public static final ForgeConfigSpec SPEC;
 

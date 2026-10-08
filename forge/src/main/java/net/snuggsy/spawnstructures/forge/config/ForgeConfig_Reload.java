@@ -8,7 +8,7 @@ import static net.snuggsy.spawnstructures.common.util.Logger.Log;
 public class ForgeConfig_Reload {
     @SubscribeEvent
     public static void onReload(ModConfigEvent.Reloading event) {
-        if (event.getConfig().getSpec() != SpawnStructuresConfig_Forge.SPEC) {
+        if (event.getConfig().getSpec() != ForgeConfig_Builder.SPEC) {
             return;
         }
 
