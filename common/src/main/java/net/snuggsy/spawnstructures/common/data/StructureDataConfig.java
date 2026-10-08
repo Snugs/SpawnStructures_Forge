@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class StructureDataConfig {
     // Structure Lookup
+    @Deprecated
     public static StructureData getStructure(String name) {
         return STRUCTURES.get(name);
     }
@@ -17,7 +18,7 @@ public class StructureDataConfig {
         List<String> result = new ArrayList<>();
 
         for (StructureData data : STRUCTURES.values()) {
-            for (String tag : data.biome()) {
+            for (String tag : data.biomeTags()) {
                 if (biomeName.contains(tag)) {
                     result.add(data.structureName());
                     break;
@@ -35,6 +36,7 @@ public class StructureDataConfig {
     //   spawnHeightOffset_"..."   -->  The vertical offset between the spawn position and the highest block above the spawn position
 
     // CHERRY_BLOSSOM
+    @Deprecated
     private static final StructureData CherryBlossom = new StructureData(
             "CHERRY_BLOSSOM",
             null,
@@ -45,6 +47,7 @@ public class StructureDataConfig {
     );
 
     // LOG_CABIN
+    @Deprecated
     private static final StructureData LogCabin = new StructureData(
             "LOG_CABIN",
             null,
@@ -55,6 +58,7 @@ public class StructureDataConfig {
     );
 
     // SAND_CASTLE
+    @Deprecated
     private static final StructureData SandCastle = new StructureData(
             "SAND_CASTLE",
             null,
@@ -65,6 +69,7 @@ public class StructureDataConfig {
     );
 
     // Structure Map
+    @Deprecated
     private static final Map<String, StructureData> STRUCTURES = Map.of(
             CherryBlossom.structureName(), CherryBlossom,
             LogCabin.structureName(), LogCabin,
