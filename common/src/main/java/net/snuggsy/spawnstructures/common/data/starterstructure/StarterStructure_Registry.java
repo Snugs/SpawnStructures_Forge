@@ -1,4 +1,4 @@
-package net.snuggsy.spawnstructures.common.worldgen.structure;
+package net.snuggsy.spawnstructures.common.data.starterstructure;
 
 import net.snuggsy.spawnstructures.common.data.struct.StructureData;
 

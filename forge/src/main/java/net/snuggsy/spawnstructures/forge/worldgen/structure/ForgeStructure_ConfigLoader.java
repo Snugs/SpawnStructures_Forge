@@ -10,8 +10,8 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.snuggsy.spawnstructures.common.worldgen.structure.StarterStructure_Codec;
-import net.snuggsy.spawnstructures.common.worldgen.structure.StarterStructure_Registry;
+import net.snuggsy.spawnstructures.common.data.starterstructure.StarterStructure_Codec;
+import net.snuggsy.spawnstructures.common.data.starterstructure.StarterStructure_Registry;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;

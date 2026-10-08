@@ -1,4 +1,4 @@
-package net.snuggsy.spawnstructures.common.worldgen.structure;
+package net.snuggsy.spawnstructures.common.data.starterstructure;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

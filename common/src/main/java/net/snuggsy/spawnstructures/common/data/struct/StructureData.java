@@ -1,6 +1,6 @@
 package net.snuggsy.spawnstructures.common.data.struct;
 
-import net.snuggsy.spawnstructures.common.worldgen.structure.StarterStructure_Defaults;
+import net.snuggsy.spawnstructures.common.data.starterstructure.StarterStructure_Defaults;
 
 import java.util.List;
 

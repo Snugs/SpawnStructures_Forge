@@ -7,8 +7,8 @@ import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
-import net.snuggsy.spawnstructures.common.worldgen.structure.StarterStructure_Codec;
-import net.snuggsy.spawnstructures.common.worldgen.structure.StarterStructure_Registry;
+import net.snuggsy.spawnstructures.common.data.starterstructure.StarterStructure_Codec;
+import net.snuggsy.spawnstructures.common.data.starterstructure.StarterStructure_Registry;
 
 import java.io.InputStreamReader;
 import java.util.Map;
