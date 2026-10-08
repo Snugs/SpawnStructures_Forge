@@ -1,7 +1,9 @@
 package net.snuggsy.spawnstructures.common;
 
+import static net.snuggsy.spawnstructures.common.util.Logger.Log;
+
 public final class SpawnStructuresCommon {
     public static void init() {
-        System.out.println("Spawn Structures common init");
+        Log("Spawn Structures common init");
     }
 }
