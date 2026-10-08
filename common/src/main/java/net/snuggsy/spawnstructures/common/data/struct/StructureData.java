@@ -1,34 +1,32 @@
 package net.snuggsy.spawnstructures.common.data.struct;
 
+import net.snuggsy.spawnstructures.common.worldgen.structure.StarterStructure_Defaults;
+
 import java.util.List;
 
 public record StructureData(
         String structureName,
-        Vec3i spawnOffset,
-        Vec3i boundingSize,
+        Vec3i spawnOffset, // Optional
+        Vec3i boundingSize, // Optional
         int spawnHeightOffset,
-        StructureRotation orientation,
-        List<String> biome
+        StructureRotation orientation, // Optional
+        List<String> biomeTags // Optional
 ) {
+    // Defaults if Null
     public StructureData {
-        // Default offset if null
+        //~
         if (spawnOffset == null) {
-            spawnOffset = new Vec3i(-15,-12,-15);
+            spawnOffset = StarterStructure_Defaults.DEFAULT_OFFSET;
         }
-
-        // Default bounding size if null
         if (boundingSize == null) {
-            boundingSize = new Vec3i(31,31,31);
+            boundingSize = StarterStructure_Defaults.DEFAULT_BOUNDING_SIZE;
         }
-
-        // Default orientation if null
+        //~
         if (orientation == null) {
-            orientation = StructureRotation.NORTH;
+            orientation = StarterStructure_Defaults.DEFAULT_ORIENTATION;
         }
-
-        // Default biome list if null
-        if (biome == null) {
-            biome = List.of();
+        if (biomeTags == null) {
+            biomeTags = List.of();
         }
     }
 }
